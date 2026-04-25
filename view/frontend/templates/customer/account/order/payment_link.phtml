@@ -1,0 +1,12 @@
+<?php
+/** @var \Magento\Framework\View\Element\Template $block */
+/** @var \Magento\Framework\Escaper $escaper */
+/** @var \PayPro\Przelewy24\ViewModel\CustomerAccount\PaymentLink $viewModel */
+$viewModel = $block->getViewModel();
+if (!$viewModel || !$viewModel->canRetryPayment()) {
+    return;
+}
+?>
+<a class="action primary przelewy24-retry-payment" href="<?= $escaper->escapeHtmlAttr($viewModel->getRetryUrl()) ?>">
+    <span><?= $escaper->escapeHtml(__('Pay for the order')) ?></span>
+</a>

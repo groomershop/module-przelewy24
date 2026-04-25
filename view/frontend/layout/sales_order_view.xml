@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceContainer name="order.actions.container">
+            <block name="przelewy24.order.payment.retry"
+                   template="PayPro_Przelewy24::customer/account/order/payment_link.phtml"
+                   cacheable="false">
+                <arguments>
+                    <argument name="view_model" xsi:type="object">PayPro\Przelewy24\ViewModel\CustomerAccount\PaymentLink</argument>
+                </arguments>
+            </block>
+        </referenceContainer>
+    </body>
+</page>
