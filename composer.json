@@ -1,7 +1,6 @@
 {
     "name": "groomershop/module-przelewy24",
     "description": "Przelewy24 payment module for Magento 2 (by GroomerShop)",
-    "version": "1.5.0",
     "keywords": [
         "przelewy24",
         "paypro",
