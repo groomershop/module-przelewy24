@@ -7,12 +7,5 @@
                 <argument name="block" xsi:type="string">PayPro\Przelewy24\Block\Adminhtml\Order\View\Tab\RefundTab</argument>
             </action>
         </referenceBlock>
-        <referenceContainer name="content">
-            <block name="przelewy24_placement" ifconfig="payment/przelewy24/active" template="PayPro_Przelewy24::order/view/placement.phtml" before="sales_order_edit">
-                <arguments>
-                    <argument name="view_model" xsi:type="object">PayPro\Przelewy24\ViewModel\PlacementViewModel</argument>
-                </arguments>
-            </block>
-        </referenceContainer>
     </body>
 </page>
