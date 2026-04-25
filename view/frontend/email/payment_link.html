@@ -1,0 +1,24 @@
+<!--@subject {{trans "Your payment link for order #%increment_id" increment_id=$order.increment_id}}@-->
+<!--@vars {
+"var order.increment_id": "Order ID",
+"var customer_name": "Customer Name",
+"var payment_link": "Payment Link URL"
+}@-->
+
+{{template config_path="design/email/header_template"}}
+
+<p>{{trans "Hello %name," name=$customer_name}}</p>
+
+<p>
+    {{trans "Your order #%increment_id has not been paid." increment_id=$order.increment_id}}<br/>
+    {{trans "To complete your payment, please click the link below:"}}
+</p>
+
+<p>
+    <a href="{{var payment_link}}">{{trans "Pay for order #%increment_id" increment_id=$order.increment_id}}</a>
+</p>
+
+<p>{{trans "If the link above does not work, copy and paste the following URL into your browser:"}}<br/>
+{{var payment_link}}</p>
+
+{{template config_path="design/email/footer_template"}}

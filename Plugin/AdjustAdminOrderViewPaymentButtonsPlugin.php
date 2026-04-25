@@ -28,6 +28,15 @@ class AdjustAdminOrderViewPaymentButtonsPlugin
             return;
         }
 
+        $subject->addButton('send_payment_link', [
+            'label' => __('Send P24 Link'),
+            'onclick' => 'confirmSetLocation("'
+                . __('Are you sure you want to send the payment link to the customer?')
+                . '", "' . $this->url->getUrl('przelewy24/payment/sendLink', [
+                    'order_id' => $order->getEntityId(),
+                ]) . '")',
+        ]);
+
         $subject->addButton('deny_payment', [
             'label' => __('Deny Payment'),
             'onclick' => 'confirmSetLocation("'

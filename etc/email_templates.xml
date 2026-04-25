@@ -1,0 +1,4 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Email/etc/email_templates.xsd">
+    <template id="przelewy24_payment_link" label="Przelewy24 - Payment Link" file="payment_link.html" type="html" module="PayPro_Przelewy24" area="frontend"/>
+</config>
