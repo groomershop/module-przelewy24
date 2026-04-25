@@ -71,8 +71,8 @@ define([
 
                     paymentDataRequest.transactionInfo = {
                         countryCode: quote.billingAddress().countryId,
-                        currencyCode: quote.getTotals()().base_currency_code,
-                        totalPrice: String(quote.getTotals()().base_grand_total),
+                        currencyCode: quote.getTotals()().quote_currency_code,
+                        totalPrice: String(quote.getTotals()().grand_total),
                         totalPriceStatus: 'FINAL'
                     };
 

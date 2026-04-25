@@ -45,7 +45,7 @@ class VerifyTransactionRequestBuilder implements BuilderInterface
         $payment = $paymentDO->getPayment();
 
         $currency = $this->subjectReader->readCurrency($buildSubject);
-        $amount = new ApiAmount($this->subjectReader->readAmount($buildSubject));
+        $amount = new ApiAmount($this->subjectReader->readOrderAmount($buildSubject));
         $magentoTransaction = $payment->getAuthorizationTransaction();
         if (!$magentoTransaction) {
             throw new CommandException(__('Missing payment parent transaction'));

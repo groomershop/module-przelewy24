@@ -5,7 +5,7 @@
  */
 $specificInfo = $block->getSpecificInformation();
 $paymentTitle = $block->getMethod()->getConfigData('title', $block->getInfo()->getOrder()->getStoreId());
-$totalDue = $block->getInfo()->getOrder()->getBaseTotalDue();
+$totalDue = $block->getInfo()->getOrder()->getTotalDue();
 $methodId = $block->getInfo()->getOrder()->getPayment()->getAdditionalInformation('method');
 $methodImgUrl = 'https://static.przelewy24.pl/payment-form-logo/'.$methodId.'/img.svg';
 ?>

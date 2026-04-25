@@ -12,12 +12,12 @@ define([
         getPaymentRequest: function () {
             return {
                 countryCode: quote.billingAddress().countryId,
-                currencyCode: quote.getTotals()().base_currency_code,
+                currencyCode: quote.getTotals()().quote_currency_code,
                 supportedNetworks: ['visa', 'masterCard', 'amex', 'discover'],
                 merchantCapabilities: ['supports3DS'],
                 total: {
                     label: config.przelewy24ApplePay.merchantName,
-                    amount: String(quote.getTotals()().base_grand_total)
+                    amount: String(quote.getTotals()().grand_total)
                 }
             };
         }

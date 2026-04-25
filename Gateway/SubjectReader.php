@@ -24,7 +24,26 @@ class SubjectReader
 
     public function readCurrency(array $subject): ?string
     {
-        return $this->readPayment($subject)->getOrder()->getCurrencyCode();
+        /** @var \Magento\Sales\Model\Order\Payment $payment */
+        $payment = $this->readPayment($subject)->getPayment();
+        return $payment->getOrder()->getOrderCurrencyCode();
+    }
+
+    public function readOrderAmount(array $subject): float
+    {
+        /** @var \Magento\Sales\Model\Order\Payment $payment */
+        $payment = $this->readPayment($subject)->getPayment();
+        return (float) $payment->getOrder()->getGrandTotal();
+    }
+
+    public function readOrderCurrencyAmount(array $subject): float
+    {
+        /** @var \Magento\Sales\Model\Order\Payment $payment */
+        $payment = $this->readPayment($subject)->getPayment();
+        $order = $payment->getOrder();
+        $rate = (float) $order->getBaseToOrderRate();
+        $baseAmount = $this->readAmount($subject);
+        return $rate > 0.0 ? $baseAmount * $rate : $baseAmount;
     }
 
     public function readOrderStoreId(array $subject): int

@@ -70,7 +70,7 @@ class RegisterTransactionRequestBuilder implements BuilderInterface
             TransactionPayloadInterface::MERCHANT_ID => $this->commonConfig->getMerchantId($storeId),
             TransactionPayloadInterface::POS_ID => $this->commonConfig->getPosId($storeId),
             TransactionPayloadInterface::SESSION_ID => $sessionId,
-            TransactionPayloadInterface::AMOUNT => $this->subjectReader->readAmount($buildSubject),
+            TransactionPayloadInterface::AMOUNT => $this->subjectReader->readOrderAmount($buildSubject),
             TransactionPayloadInterface::CURRENCY => $this->subjectReader->readCurrency($buildSubject),
             TransactionPayloadInterface::DESCRIPTION => (string) __('Order: #%1', $orderIncrementId),
             TransactionPayloadInterface::WAIT_FOR_RESULT => $waitForResult,

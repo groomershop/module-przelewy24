@@ -72,7 +72,7 @@ class RefundTransactionRequestBuilder implements BuilderInterface
             $parentTransaction->getAdditionalInformation(Transaction::RAW_DETAILS)
         );
 
-        $amount = new ApiAmount($this->subjectReader->readAmount($buildSubject));
+        $amount = new ApiAmount($this->subjectReader->readOrderCurrencyAmount($buildSubject));
         $storeId = $this->subjectReader->readOrderStoreId($buildSubject);
 
         /** @var \Magento\Store\Model\Store $store */
