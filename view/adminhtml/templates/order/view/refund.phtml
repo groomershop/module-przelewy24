@@ -1,0 +1,94 @@
+<?php
+/**
+ * @var \PayPro\Przelewy24\Block\Adminhtml\Order\View\Tab\RefundTab $block
+ * @var \Magento\Framework\Escaper $escaper
+ */
+$refunds = $block->getRefundsList();
+?>
+<section class="admin__page-section">
+    <div class="admin__page-section-title">
+        <span class="title"><?= $escaper->escapeHtml(__('Przelewy24 Refund')) ?></span>
+    </div>
+    <div class="admin__page-section-content">
+        <form method="POST" action="<?= $escaper->escapeUrl($block->getRefundSubmitUrl()) ?>">
+            <div class="admin__field">
+                <label for="history_comment" class="admin__field-label">
+                    <?= $escaper->escapeHtml(__('Amount to refund')) ?>
+                </label>
+                <div class="admin__field-control">
+                    <input type="number" name="p24_refund_amount" value="" min="0.01" step="0.01"/>
+                </div>
+            </div>
+            <div class="admin__field">
+                <button title="<?= $escaper->escapeHtmlAttr(__('Refund')) ?>"
+                        type="submit"
+                        class="action-default scalable action-save action-secondary">
+                    <span><?= $escaper->escapeHtml(__('Refund')) ?></span>
+                </button>
+            </div>
+            <input type="hidden"
+                   name="form_key"
+                   value="<?= $escaper->escapeHtmlAttr($block->getFormKey()) ?>"/>
+            <input type="hidden"
+                   name="order_id"
+                   value="<?= $escaper->escapeHtmlAttr($block->getOrder()->getId()) ?>"/>
+            <input type="hidden"
+                   name="p24_order_id"
+                   value="<?= $escaper->escapeHtmlAttr($block->getP24OrderId()) ?>"/>
+            <input type="hidden"
+                   name="p24_session_id"
+                   value="<?= $escaper->escapeHtmlAttr($block->getSessionId()) ?>"/>
+        </form>
+    </div>
+</section>
+<section class="admin__page-section">
+    <div class="admin__page-section-title">
+        <span class="title"><?= $escaper->escapeHtml(__('Refunds list')) ?></span>
+    </div>
+    <div class="admin__page-section-content">
+        <?php if (empty($refunds)): ?>
+            <div class="message message-warning warning">
+                <?= $escaper->escapeHtml(__('No refunds')) ?>
+            </div>
+        <?php else: ?>
+            <div class="admin__table-wrapper">
+                <table class="data-table admin__table-primary">
+                    <thead>
+                        <tr class="headings">
+                            <th>
+                                <span><?= $escaper->escapeHtml(__('Request ID')) ?></span>
+                            </th>
+                            <th>
+                                <span><?= $escaper->escapeHtml(__('Date')) ?></span>
+                            </th>
+                            <th>
+                                <span><?= $escaper->escapeHtml(__('Amount')) ?></span>
+                            </th>
+                            <th>
+                                <span><?= $escaper->escapeHtml(__('Status')) ?></span>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($refunds as $refund): ?>
+                            <tr>
+                                <td>
+                                    <?= $escaper->escapeHtml($refund['requestId']) ?>
+                                </td>
+                                <td>
+                                    <?= $escaper->escapeHtml($block->formatDate($refund['date'])) ?>
+                                </td>
+                                <td>
+                                    <?= /** @noEscape  */ $block->formatAmount($refund['amount']) ?>
+                                </td>
+                                <td>
+                                    <?= $escaper->escapeHtml(__($block->formatStatus($refund['status']))) ?>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
+        <?php endif; ?>
+    </div>
+</section>

@@ -1,0 +1,522 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="przelewy24" translate="label" sortOrder="410">
+            <label>Przelewy24</label>
+        </tab>
+        <section id="przelewy24_main_settings" translate="label" type="text" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
+            <class>separator-top</class>
+            <label>Main settings</label>
+            <tab>przelewy24</tab>
+            <resource>Magento_Sales::config_sales</resource>
+            <group id="przelewy24_header" translate="label" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                <frontend_model>PayPro\Przelewy24\Block\Adminhtml\System\Config\Form\Fieldset\Przelewy24Header</frontend_model>
+            </group>
+            <group id="przelewy24_main_settings" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1" translate="label">
+                <label>Main settings</label>
+                <frontend_model>PayPro\Przelewy24\Block\Adminhtml\System\Config\Form\Fieldset\Przelewy24</frontend_model>
+                <field id="merchant_id" translate="label tooltip" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Merchant ID</label>
+                    <validate>validate-number validate-greater-than-zero</validate>
+                    <config_path>payment/przelewy24/merchant_id</config_path>
+                    <tooltip><![CDATA[<span class='przelewy24-tooltip-title'>Merchant ID</span><div class='przelewy24-tooltip-content'><div>It is your login to the P24 Transaction Panel. It can be found as well in the P24 Transaction panel in<br><strong>"My account"</strong> => <strong>"Account Verification"</strong> => <strong>My stores</strong>.</div><img src='https://www.przelewy24.pl/storage/app/media/do-pobrania/gotowe-wtyczki/magento/helper/en_p24_setting-general-merchantid1.png' alt=''/></div>]]></tooltip>
+                </field>
+                <field id="pos_id" translate="label tooltip" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Pos ID</label>
+                    <validate>validate-number validate-greater-than-zero</validate>
+                    <config_path>payment/przelewy24/pos_id</config_path>
+                    <tooltip><![CDATA[<span class='przelewy24-tooltip-title'>Pos ID</span><div class='przelewy24-tooltip-content'><div>It is your login to the P24 Transaction Panel. It can be found as well in the P24 Transaction panel in<br><strong>"My account"</strong> => <strong>"Account Verification"</strong> => <strong>My stores</strong>.</div><img src='https://www.przelewy24.pl/storage/app/media/do-pobrania/gotowe-wtyczki/magento/helper/en_p24_setting-general-merchantid1.png' alt=''/></div>]]></tooltip>
+                </field>
+                <field id="crc_key" translate="label" type="obscure" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>CRC key</label>
+                    <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
+                    <config_path>payment/przelewy24/crc_key</config_path>
+                    <tooltip><![CDATA[<span class='przelewy24-tooltip-title'>CRC key</span><div class='przelewy24-tooltip-content'><div>The CRC key and the API key are the necessary configuration data needed for connection with the P24 system. You can find them in the P24 Transaction Panel in<br><strong>"My account"</strong> => <strong>"API Configuration"</strong>.</div><img src='https://www.przelewy24.pl/storage/app/media/do-pobrania/gotowe-wtyczki/magento/helper/en_p24_setting-crc_key.png' alt=''/></div>]]></tooltip>
+                </field>
+                <field id="report_key" translate="label" type="obscure" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>API key</label>
+                    <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
+                    <config_path>payment/przelewy24/report_key</config_path>
+                    <tooltip><![CDATA[<span class='przelewy24-tooltip-title'>API key</span><div class='przelewy24-tooltip-content'><div>The CRC key and the API key are the necessary configuration data needed for connection with the P24 system. You can find them in the P24 Transaction Panel in<br><strong>"My account"</strong> => <strong>"API Configuration"</strong>.</div><img src='https://www.przelewy24.pl/storage/app/media/do-pobrania/gotowe-wtyczki/magento/helper/en_p24_setting-api_key.png' alt=''/></div>]]></tooltip>
+                </field>
+                <field id="test_mode" translate="label" type="select" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Test mode</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <config_path>payment/przelewy24/test_mode</config_path>
+                    <tooltip><![CDATA[<span class='przelewy24-tooltip-title'>Test mode</span><div class='przelewy24-tooltip-content'><div>The test mode determines whether the plugin connects to the Przelewy24 production or test environment. Select "No" for real transactions or "Yes" for testing (use sandbox keys).<br><br><strong>IP address</strong><br>To ensure proper connection, enter your store's server IP address in the Przelewy24 panel ("My account" → "API Configuration"). If unsure, contact your hosting provider.</div><img src='https://www.przelewy24.pl/storage/app/media/do-pobrania/gotowe-wtyczki/magento/helper/en_p24_setting-ip.png' alt=''/></div>]]></tooltip>
+                    <comment>
+                        <model>PayPro\Przelewy24\Model\Config\Comment\TestModeComment</model>
+                    </comment>
+                </field>
+                <field id="test_access" translate="button_label comment" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label/>
+                    <button_label>Test Access</button_label>
+                    <frontend_model>PayPro\Przelewy24\Block\Adminhtml\System\Config\Form\Button\TestAccessButton</frontend_model>
+                    <comment>Configuration must be saved before test</comment>
+                    <config_path>payment/przelewy24/test_access</config_path>
+                </field>
+            </group>
+        </section>
+        <section id="przelewy24_gateway" translate="label" type="text" sortOrder="200" showInDefault="1" showInWebsite="1" showInStore="1">
+            <class>separator-top</class>
+            <label>Payment gateway</label>
+            <tab>przelewy24</tab>
+            <resource>Magento_Sales::config_sales</resource>
+            <group id="przelewy24_header" translate="label" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                <frontend_model>PayPro\Przelewy24\Block\Adminhtml\System\Config\Form\Fieldset\Przelewy24Header</frontend_model>
+            </group>
+            <group id="przelewy24_gateway" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1" translate="label">
+                <label>Payment gateway</label>
+                <frontend_model>PayPro\Przelewy24\Block\Adminhtml\System\Config\Form\Fieldset\Przelewy24</frontend_model>
+                <field id="active" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Enabled</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <config_path>payment/przelewy24/active</config_path>
+                </field>
+                <field id="allowed_currencies" translate="label" type="multiselect" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Allowed Currencies</label>
+                    <source_model>Magento\Config\Model\Config\Source\Locale\Currency</source_model>
+                    <can_be_empty>0</can_be_empty>
+                    <config_path>payment/przelewy24/allowed_currencies</config_path>
+                </field>
+                <field id="allowspecific" translate="label comment" type="select" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Allowed Countries</label>
+                    <source_model>Magento\Payment\Model\Config\Source\Allspecificcountries</source_model>
+                    <comment>If set to specific, guest customers will not have a billing country and may not be able to checkout.</comment>
+                    <config_path>payment/przelewy24/allowspecific</config_path>
+                </field>
+                <field id="specificcountry" translate="label" type="multiselect" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Payment from Specific countries</label>
+                    <source_model>Magento\Directory\Model\Config\Source\Country</source_model>
+                    <config_path>payment/przelewy24/specificcountry</config_path>
+                    <depends>
+                        <field id="allowspecific">1</field>
+                    </depends>
+                </field>
+                <field id="debug" translate="label" type="select" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Debug</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <config_path>payment/przelewy24/debug</config_path>
+                </field>
+                <field id="sort_order" translate="label" type="text" sortOrder="120" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Sort order</label>
+                    <validate>validate-number</validate>
+                    <config_path>payment/przelewy24/sort_order</config_path>
+                </field>
+                <field id="select_payment_method_in_store" translate="label" type="select" sortOrder="130" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Select payment method in store</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <config_path>payment/przelewy24/select_payment_method_in_store</config_path>
+                </field>
+                <field id="wait_for_transaction_result" translate="label comment" type="select" sortOrder="140" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Wait for transaction result</label>
+                    <comment>If set to yes, customer will be redirected back to the shop upon receiving payment confirmation.</comment>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <config_path>payment/przelewy24/wait_for_transaction_result</config_path>
+                </field>
+                <field id="promote_eraty_scb" translate="label comment" type="select" sortOrder="150" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Promote eRaty Santander Consumer Bank S.A.</label>
+                    <comment>If set to yes, method eRaty Santander Consumer Bank S.A. will be displayed on top of payment methods list.</comment>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <config_path>payment/przelewy24/promote_eraty_scb</config_path>
+                </field>
+                <field id="payment_auto_update" translate="label" type="select" sortOrder="160" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Automatically update payment status</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <config_path>payment/przelewy24/payment_auto_update</config_path>
+                    <comment>Automatically check for payment status update every 30 minutes. Order will be automatically cancelled if there is no payment after 30 minutes from order placement.</comment>
+                </field>
+                <field id="payment_time_limit" translate="label" type="text" sortOrder="170" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Time limit</label>
+                    <validate>validate-number</validate>
+                    <config_path>payment/przelewy24/payment_time_limit</config_path>
+                    <comment>Time limit in minutes after order placement when payment can be made. Please enter 0 for no limit, order won't be cancelled.</comment>
+                </field>
+                <field id="payment_extra_time_limit" translate="label" type="text" sortOrder="180" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Extra time limit</label>
+                    <validate>validate-number</validate>
+                    <config_path>payment/przelewy24/payment_extra_time_limit</config_path>
+                    <comment>Time limit in minutes after order placement when payment can be made. Used for methods specified below.</comment>
+                </field>
+                <field id="payment_extra_time_limit_methods" translate="label" type="text" sortOrder="190" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Extra time limit methods</label>
+                    <config_path>payment/przelewy24/payment_extra_time_limit_methods</config_path>
+                    <comment>Internal Przelewy24 payment methods IDs which will use extra time limit. Comma separated.</comment>
+                </field>
+            </group>
+            <group id="payment_methods" translate="label" sortOrder="200" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Payment methods</label>
+                <frontend_model>Magento\Config\Block\System\Config\Form\Fieldset</frontend_model>
+                <field id="payment_methods" translate="label comment" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label/>
+                    <comment>If method is not listed here it will be automatically appended to the end of list in store if active.</comment>
+                    <frontend_model>PayPro\Przelewy24\Block\Adminhtml\System\Config\Form\Field\PaymentMethodsField</frontend_model>
+                    <backend_model>Magento\Config\Model\Config\Backend\Serialized\ArraySerialized</backend_model>
+                    <config_path>payment/przelewy24/payment_methods</config_path>
+                </field>
+                <field id="cc_method_id" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Credit card method ID</label>
+                    <validate>validate-number</validate>
+                    <frontend_model>PayPro\Przelewy24\Block\Adminhtml\System\Config\Form\Field\ReadonlyField</frontend_model>
+                    <config_path>payment/przelewy24_card/cc_method_id</config_path>
+                    <comment>This ID is automatically updated during payment methods list update.</comment>
+                </field>
+                <field id="ap_method_id" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Apple Pay method ID</label>
+                    <validate>validate-number</validate>
+                    <frontend_model>PayPro\Przelewy24\Block\Adminhtml\System\Config\Form\Field\ReadonlyField</frontend_model>
+                    <config_path>payment/przelewy24_apple_pay/ap_method_id</config_path>
+                    <comment>This ID is automatically updated during payment methods list update.</comment>
+                </field>
+                <field id="gp_method_id" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Google Pay method ID</label>
+                    <validate>validate-number</validate>
+                    <frontend_model>PayPro\Przelewy24\Block\Adminhtml\System\Config\Form\Field\ReadonlyField</frontend_model>
+                    <config_path>payment/przelewy24_google_pay/gp_method_id</config_path>
+                    <comment>This ID is automatically updated during payment methods list update.</comment>
+                </field>
+            </group>
+        </section>
+        <section id="przelewy24_card" translate="label" type="text" sortOrder="300" showInDefault="1" showInWebsite="1" showInStore="1">
+            <class>separator-top</class>
+            <label>Card payment</label>
+            <tab>przelewy24</tab>
+            <resource>Magento_Sales::config_sales</resource>
+            <group id="przelewy24_header" translate="label" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1">
+                <frontend_model>PayPro\Przelewy24\Block\Adminhtml\System\Config\Form\Fieldset\Przelewy24Header</frontend_model>
+            </group>
+            <group id="przelewy24_card" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1" translate="label">
+                <label>Card payment</label>
+                <frontend_model>PayPro\Przelewy24\Block\Adminhtml\System\Config\Form\Fieldset\Przelewy24</frontend_model>
+                <field id="active" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Enabled</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <config_path>payment/przelewy24_card/active</config_path>
+                    <comment>To use this payment method you must have one of those methods enabled in Przelewy24: 218, 241, 242.</comment>
+                    <tooltip><![CDATA[<span class='przelewy24-tooltip-title'>Card payment</span><div class='przelewy24-tooltip-content'><div>Enabling this option allows for card payments directly on your website.<br><strong>Before turning this option on, please contact P24 to enable adequate services on your account for on-site card payments</strong>.</div><div><em>Example view for the buyer:</em><img src='https://www.przelewy24.pl/storage/app/media/do-pobrania/gotowe-wtyczki/magento/helper/en_karta_lvl0.png' alt=''/></div></div>]]></tooltip>
+                </field>
+                <field id="vault" translate="label" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Enable Przelewy24 Card Vault</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <config_path>payment/przelewy24_card_vault/active</config_path>
+                    <tooltip><![CDATA[<span class='przelewy24-tooltip-title'>Card Vault</span><div class='przelewy24-tooltip-content'><div>Enabling this option allows for card payments using a saved alias. This functionality is available only for logged-in buyers who have an account in the store. It becomes accessible after the customer's first payment, provided they have agreed to save their card details.<br><strong>Before turning this option on, please contact P24 to enable the necessary services on your account for on-site card payments</strong>.</div></div>]]></tooltip>
+                </field>
+                <field id="c2p" translate="label" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Enable Click to Pay</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <config_path>payment/przelewy24_card/c2p</config_path>
+                </field>
+                <field id="c2p_guests" translate="label" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Enable Click to Pay for guests</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <config_path>payment/przelewy24_card/c2p_guests</config_path>
+                </field>
+                <field id="allowed_currencies" translate="label" type="multiselect" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Allowed Currencies</label>
+                    <source_model>Magento\Config\Model\Config\Source\Locale\Currency</source_model>
+                    <can_be_empty>0</can_be_empty>
+                    <config_path>payment/przelewy24_card/allowed_currencies</config_path>
+                </field>
+                <field id="allowspecific" translate="label comment" type="select" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Allowed Countries</label>
+                    <source_model>Magento\Payment\Model\Config\Source\Allspecificcountries</source_model>
+                    <comment>If set to specific, guest customers will not have a billing country and may not be able to checkout.</comment>
+                    <config_path>payment/przelewy24_card/allowspecific</config_path>
+                </field>
+                <field id="specificcountry" translate="label" type="multiselect" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Payment from Specific countries</label>
+                    <source_model>Magento\Directory\Model\Config\Source\Country</source_model>
+                    <config_path>payment/przelewy24_card/specificcountry</config_path>
+                    <depends>
+                        <field id="allowspecific">1</field>
+                    </depends>
+                </field>
+                <field id="debug" translate="label" type="select" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Debug</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <config_path>payment/przelewy24_card/debug</config_path>
+                </field>
+                <field id="sort_order" translate="label" type="text" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Sort order</label>
+                    <validate>validate-number</validate>
+                    <config_path>payment/przelewy24_card/sort_order</config_path>
+                </field>
+            </group>
+        </section>
+        <section id="przelewy24_blik" translate="label" type="text" sortOrder="400" showInDefault="1" showInWebsite="1" showInStore="1">
+            <class>separator-top</class>
+            <label>BLIK payment</label>
+            <tab>przelewy24</tab>
+            <resource>Magento_Sales::config_sales</resource>
+            <group id="przelewy24_header" translate="label" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1">
+                <frontend_model>PayPro\Przelewy24\Block\Adminhtml\System\Config\Form\Fieldset\Przelewy24Header</frontend_model>
+            </group>
+            <group id="przelewy24_blik" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1" translate="label">
+                <label>BLIK payment</label>
+                <frontend_model>PayPro\Przelewy24\Block\Adminhtml\System\Config\Form\Fieldset\Przelewy24</frontend_model>
+                <field id="active" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Enabled</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <config_path>payment/przelewy24_blik/active</config_path>
+                    <tooltip><![CDATA[<span class='przelewy24-tooltip-title'>BLIK Level 0 payment</span><div class='przelewy24-tooltip-content'><div>Enabling this option will allow the payer to enter the BLIK code directly on your website.<br><strong>Before turning this option on, please contact P24 to enable adequate services on your account for on-site Blik payments</strong>.</div><div><em>Example view for the buyer:</em><img src='https://www.przelewy24.pl/storage/app/media/do-pobrania/gotowe-wtyczki/magento/helper/en_blik_lvl0.png' alt=''/></div></div>]]></tooltip>
+                </field>
+                <field id="confirmation_error_time" translate="label" type="text" sortOrder="15" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Payment confirmation error time</label>
+                    <validate>validate-number</validate>
+                    <config_path>payment/przelewy24_blik/confirmation_error_time</config_path>
+                </field>
+                <field id="vault" translate="label" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Enable Przelewy24 BLIK Vault</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <config_path>payment/przelewy24_blik_vault/active</config_path>
+                    <tooltip><![CDATA[<span class='przelewy24-tooltip-title'>BLIK Vault payment</span><div class='przelewy24-tooltip-content'><div>Enabling this option allows for BLIK payments, using saved alias. (Available for a customer after their first payment, with the agreement checked).<br><strong>Before turning this option on, please contact P24 to enable adequate services on your account for on-site Blik payments</strong>.</div><div><em>Example view for the buyer:</em><img src='https://www.przelewy24.pl/storage/app/media/do-pobrania/gotowe-wtyczki/magento/helper/en_blik_oneclick.png' alt=''/></div></div>]]></tooltip>
+                </field>
+                <field id="allowed_currencies" translate="label" type="multiselect" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Allowed Currencies</label>
+                    <source_model>Magento\Config\Model\Config\Source\Locale\Currency</source_model>
+                    <can_be_empty>0</can_be_empty>
+                    <config_path>payment/przelewy24_blik/allowed_currencies</config_path>
+                </field>
+                <field id="allowspecific" translate="label comment" type="select" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Allowed Countries</label>
+                    <source_model>Magento\Payment\Model\Config\Source\Allspecificcountries</source_model>
+                    <comment>If set to specific, guest customers will not have a billing country and may not be able to checkout.</comment>
+                    <config_path>payment/przelewy24_blik/allowspecific</config_path>
+                </field>
+                <field id="specificcountry" translate="label" type="multiselect" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Payment from Specific countries</label>
+                    <source_model>Magento\Directory\Model\Config\Source\Country</source_model>
+                    <config_path>payment/przelewy24_blik/specificcountry</config_path>
+                    <depends>
+                        <field id="allowspecific">1</field>
+                    </depends>
+                </field>
+                <field id="debug" translate="label" type="select" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Debug</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <config_path>payment/przelewy24_blik/debug</config_path>
+                </field>
+                <field id="sort_order" translate="label" type="text" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Sort order</label>
+                    <validate>validate-number</validate>
+                    <config_path>payment/przelewy24_blik/sort_order</config_path>
+                </field>
+            </group>
+        </section>
+        <section id="przelewy24_google_pay" translate="label" type="text" sortOrder="500" showInDefault="1" showInWebsite="1" showInStore="1">
+            <class>separator-top</class>
+            <label>Google Pay payment</label>
+            <tab>przelewy24</tab>
+            <resource>Magento_Sales::config_sales</resource>
+            <group id="przelewy24_header" translate="label" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1">
+                <frontend_model>PayPro\Przelewy24\Block\Adminhtml\System\Config\Form\Fieldset\Przelewy24Header</frontend_model>
+            </group>
+            <group id="przelewy24_google_pay" type="text" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1" translate="label">
+                <label>Google Pay payment</label>
+                <frontend_model>PayPro\Przelewy24\Block\Adminhtml\System\Config\Form\Fieldset\Przelewy24</frontend_model>
+                <field id="active" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Enabled</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <config_path>payment/przelewy24_google_pay/active</config_path>
+                </field>
+                <field id="merchant_id" translate="label" type="text" sortOrder="15" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Merchant ID</label>
+                    <config_path>payment/przelewy24_google_pay/merchant_id</config_path>
+                    <comment>Google Merchant ID: can have 12-18 characters</comment>
+                </field>
+                <field id="authentication_methods" translate="label comment" type="multiselect" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Authentication methods</label>
+                    <source_model>PayPro\Przelewy24\Model\OptionSource\GooglePayAuthMethodsOptionSource</source_model>
+                    <can_be_empty>0</can_be_empty>
+                    <config_path>payment/przelewy24_google_pay/authentication_methods</config_path>
+                    <comment>Please refer to the Google Pay API reference</comment>
+                </field>
+                <field id="card_networks" translate="label comment" type="multiselect" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Card networks</label>
+                    <source_model>PayPro\Przelewy24\Model\OptionSource\GooglePayCardNetworksOptionSource</source_model>
+                    <can_be_empty>0</can_be_empty>
+                    <config_path>payment/przelewy24_google_pay/card_networks</config_path>
+                    <comment>Please refer to the Google Pay API reference</comment>
+                </field>
+                <field id="allowed_currencies" translate="label" type="multiselect" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Allowed Currencies</label>
+                    <source_model>Magento\Config\Model\Config\Source\Locale\Currency</source_model>
+                    <can_be_empty>0</can_be_empty>
+                    <config_path>payment/przelewy24_google_pay/allowed_currencies</config_path>
+                </field>
+                <field id="allowspecific" translate="label comment" type="select" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Allowed Countries</label>
+                    <source_model>Magento\Payment\Model\Config\Source\Allspecificcountries</source_model>
+                    <comment>If set to specific, guest customers will not have a billing country and may not be able to checkout.</comment>
+                    <config_path>payment/przelewy24_google_pay/allowspecific</config_path>
+                </field>
+                <field id="specificcountry" translate="label" type="multiselect" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Payment from Specific countries</label>
+                    <source_model>Magento\Directory\Model\Config\Source\Country</source_model>
+                    <config_path>payment/przelewy24_google_pay/specificcountry</config_path>
+                    <depends>
+                        <field id="allowspecific">1</field>
+                    </depends>
+                </field>
+                <field id="debug" translate="label" type="select" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Debug</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <config_path>payment/przelewy24_google_pay/debug</config_path>
+                </field>
+                <field id="sort_order" translate="label" type="text" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Sort order</label>
+                    <validate>validate-number</validate>
+                    <config_path>payment/przelewy24_google_pay/sort_order</config_path>
+                </field>
+            </group>
+        </section>
+        <section id="przelewy24_apple_pay" translate="label" type="text" sortOrder="600" showInDefault="1" showInWebsite="1" showInStore="1">
+            <class>separator-top</class>
+            <label>Apple Pay payment</label>
+            <tab>przelewy24</tab>
+            <resource>Magento_Sales::config_sales</resource>
+            <group id="przelewy24_header" translate="label" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1">
+                <frontend_model>PayPro\Przelewy24\Block\Adminhtml\System\Config\Form\Fieldset\Przelewy24Header</frontend_model>
+            </group>
+            <group id="przelewy24_apple_pay" type="text" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1" translate="label">
+                <label>Apple Pay payment</label>
+                <frontend_model>PayPro\Przelewy24\Block\Adminhtml\System\Config\Form\Fieldset\Przelewy24</frontend_model>
+                <field id="active" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Enabled</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <config_path>payment/przelewy24_apple_pay/active</config_path>
+                </field>
+                <field id="merchant_identifier" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Merchant Identifier</label>
+                    <validate>validate-required</validate>
+                    <config_path>payment/przelewy24_apple_pay/merchant_identifier</config_path>
+                    <tooltip><![CDATA[<span class='przelewy24-tooltip-title'>Merchant Identifier</span><div class='przelewy24-tooltip-content'><div>In order to obtain configuration data for Apple Pay on-site payments, please follow the instructions from our documentation below: <a href='https://developers.przelewy24.pl/index.php?en#tag/APay-Description/Creating-Apple-Pay-Payment-Processing-Certificate'>Creating Apple Pay Payment Processing Certificate</a>.</div></div>]]></tooltip>
+                </field>
+                <field id="certificate" translate="label comment" type="file" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Certificate</label>
+                    <comment>Apple Pay merchant certificate in PEM format</comment>
+                    <backend_model>PayPro\Przelewy24\Model\ApplePay\Config\Backend\Pem</backend_model>
+                    <upload_dir config="system" scope_info="1">przelewy24_apple_pay</upload_dir>
+                    <config_path>payment/przelewy24_apple_pay/certificate</config_path>
+                    <tooltip><![CDATA[<span class='przelewy24-tooltip-title'>Certificate</span><div class='przelewy24-tooltip-content'><div>In order to obtain configuration data for Apple Pay on-site payments, please follow the instructions from our documentation below: <a href='https://developers.przelewy24.pl/index.php?en#tag/APay-Description/Creating-Apple-Pay-Payment-Processing-Certificate'>Creating Apple Pay Payment Processing Certificate</a>.</div></div>]]></tooltip>
+                </field>
+                <field id="ssl_key" translate="label" type="file" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>SSL Key</label>
+                    <comment>Apple Pay merchant private key in PEM format</comment>
+                    <backend_model>PayPro\Przelewy24\Model\ApplePay\Config\Backend\Pem</backend_model>
+                    <upload_dir config="system" scope_info="1">przelewy24_apple_pay</upload_dir>
+                    <config_path>payment/przelewy24_apple_pay/ssl_key</config_path>
+                </field>
+                <field id="allowed_currencies" translate="label" type="multiselect" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Allowed Currencies</label>
+                    <source_model>Magento\Config\Model\Config\Source\Locale\Currency</source_model>
+                    <can_be_empty>0</can_be_empty>
+                    <config_path>payment/przelewy24_apple_pay/allowed_currencies</config_path>
+                </field>
+                <field id="allowspecific" translate="label comment" type="select" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Allowed Countries</label>
+                    <source_model>Magento\Payment\Model\Config\Source\Allspecificcountries</source_model>
+                    <comment>If set to specific, guest customers will not have a billing country and may not be able to checkout.</comment>
+                    <config_path>payment/przelewy24_apple_pay/allowspecific</config_path>
+                </field>
+                <field id="specificcountry" translate="label" type="multiselect" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Payment from Specific countries</label>
+                    <source_model>Magento\Directory\Model\Config\Source\Country</source_model>
+                    <config_path>payment/przelewy24_apple_pay/specificcountry</config_path>
+                    <depends>
+                        <field id="allowspecific">1</field>
+                    </depends>
+                </field>
+                <field id="debug" translate="label" type="select" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Debug</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <config_path>payment/przelewy24_apple_pay/debug</config_path>
+                </field>
+                <field id="sort_order" translate="label" type="text" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Sort order</label>
+                    <validate>validate-number</validate>
+                    <config_path>payment/przelewy24_apple_pay/sort_order</config_path>
+                </field>
+            </group>
+        </section>
+        <section id="przelewy24_instalment" translate="label" type="text" sortOrder="700" showInDefault="1" showInWebsite="1" showInStore="1">
+            <class>separator-top</class>
+            <label>Instalment payments</label>
+            <tab>przelewy24</tab>
+            <resource>Magento_Sales::config_sales</resource>
+            <group id="przelewy24_header" translate="label" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1">
+                <frontend_model>PayPro\Przelewy24\Block\Adminhtml\System\Config\Form\Fieldset\Przelewy24Header</frontend_model>
+            </group>
+            <group id="przelewy24_instalment" type="text" sortOrder="65" showInDefault="1" showInWebsite="1" showInStore="1" translate="label">
+                <label>Instalment payments</label>
+                <frontend_model>PayPro\Przelewy24\Block\Adminhtml\System\Config\Form\Fieldset\Przelewy24</frontend_model>
+                <field id="enabled" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Enabled</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <config_path>payment/przelewy24_instalment_widget/enabled</config_path>
+                    <tooltip><![CDATA[<span class='przelewy24-tooltip-title'>Enable Installment widget</span><div class='przelewy24-tooltip-content'><div>Enabling this option will display a widget/simulator with information about the available installment offer. Before enabling this option, please contact Przelewy24.<br>Non-standard Magento templates may not allow displaying additional content in the product page, cart page, and checkout page areas.</div><div><em>Example view for the buyer:</em><img src='https://www.przelewy24.pl/storage/app/media/do-pobrania/gotowe-wtyczki/magento/helper/en_p24_setting-simulator1.png' alt=''/></div></div>]]></tooltip>
+                </field>
+                <field id="show_on_pdp" translate="label" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Show on PDP</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <config_path>payment/przelewy24_instalment_widget/show_on_pdp</config_path>
+                </field>
+                <field id="show_on_cart" translate="label" type="select" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Show on Cart</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <config_path>payment/przelewy24_instalment_widget/show_on_cart</config_path>
+                </field>
+                <field id="show_on_checkout" translate="label" type="select" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Show on Checkout</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <config_path>payment/przelewy24_instalment_widget/show_on_checkout</config_path>
+                </field>
+                <field id="banner_size" translate="label" type="select" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Banner size</label>
+                    <source_model>PayPro\Przelewy24\Model\OptionSource\InstalmentWidgetBannerSizeOptionSource</source_model>
+                    <config_path>payment/przelewy24_instalment_widget/banner_size</config_path>
+                    <tooltip><![CDATA[<span class='przelewy24-tooltip-title'>Widget size options</span><div class='przelewy24-tooltip-content'><div>Choose the Size of the Displayed Element: Options are MINI and MAX</div><div><em>Example view for the buyer:</em><img src='https://www.przelewy24.pl/storage/app/media/do-pobrania/gotowe-wtyczki/magento/helper/en_p24_setting-installment3.png' alt=''/></div></div>]]></tooltip>
+                </field>
+                <field id="show_simulator" translate="label" type="select" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Show simulator</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <config_path>payment/przelewy24_instalment_widget/show_simulator</config_path>
+                    <tooltip><![CDATA[<span class='przelewy24-tooltip-title'>Installment simulator modal</span><div class='przelewy24-tooltip-content'><div>When a customer clicks on the widget, a pop-up window may appear with information about the installment simulation.</div><div><em>Example view for the buyer:</em><img src='https://www.przelewy24.pl/storage/app/media/do-pobrania/gotowe-wtyczki/magento/helper/en_p24_setting-simulator2.png' alt=''/></div></div>]]></tooltip>
+                </field>
+                <field id="method_id" translate="label" type="text" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Method ID</label>
+                    <validate>validate-number</validate>
+                    <config_path>payment/przelewy24_instalment_widget/method_id</config_path>
+                </field>
+                <field id="currency" translate="label" type="select" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Currency</label>
+                    <source_model>Magento\Config\Model\Config\Source\Locale\Currency</source_model>
+                    <config_path>payment/przelewy24_instalment_widget/currency</config_path>
+                </field>
+                <field id="lang" translate="label" type="text" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Lang</label>
+                    <config_path>payment/przelewy24_instalment_widget/lang</config_path>
+                </field>
+            </group>
+        </section>
+        <section id="przelewy24_compatibility" translate="label" type="text" sortOrder="800" showInDefault="1" showInWebsite="1" showInStore="1">
+            <class>separator-top</class>
+            <label>Compatibility</label>
+            <tab>przelewy24</tab>
+            <resource>Magento_Sales::config_sales</resource>
+            <group id="przelewy24_header" translate="label" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1">
+                <frontend_model>PayPro\Przelewy24\Block\Adminhtml\System\Config\Form\Fieldset\Przelewy24Header</frontend_model>
+            </group>
+            <group id="przelewy24_compatibility" type="text" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="1" translate="label">
+                <label>Compatibility</label>
+                <frontend_model>PayPro\Przelewy24\Block\Adminhtml\System\Config\Form\Fieldset\Przelewy24</frontend_model>
+                <field id="refund_compatibility_enabled" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Refund Compatibility Enabled</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <config_path>payment/przelewy24/refund_compatibility_enabled</config_path>
+                    <comment>Enable this option to make refunds for orders paid with Dialcom_Przelewy module.</comment>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

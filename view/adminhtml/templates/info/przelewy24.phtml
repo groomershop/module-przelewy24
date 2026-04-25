@@ -1,0 +1,44 @@
+<?php
+/**
+ * @var \Magento\Payment\Block\Info $block
+ * @var \Magento\Framework\Escaper $escaper
+ */
+$specificInfo = $block->getSpecificInformation();
+$paymentTitle = $block->getMethod()->getConfigData('title', $block->getInfo()->getOrder()->getStoreId());
+$totalDue = $block->getInfo()->getOrder()->getBaseTotalDue();
+$methodId = $block->getInfo()->getOrder()->getPayment()->getAdditionalInformation('method');
+$methodImgUrl = 'https://static.przelewy24.pl/payment-form-logo/'.$methodId.'/img.svg';
+?>
+<?= $escaper->escapeHtml($paymentTitle) ?>
+
+<?php if ($specificInfo || $methodId): ?>
+    <table class="data-table admin__table-secondary">
+        <?php if ($methodId): ?>
+            <tr>
+                <th><?= $escaper->escapeHtml(__('Payment method')) ?>:</th>
+                <td>
+                    <img src="<?= $escaper->escapeHtmlAttr($methodImgUrl) ?>" height="70px"/>
+                </td>
+            </tr>
+        <?php endif;?>
+        <?php foreach ($specificInfo ?? [] as $label => $value): ?>
+            <?php
+            if ($label === \PayPro\Przelewy24\Model\PaymentLink::LABEL && $totalDue == 0) {
+                continue;
+            }
+            ?>
+            <tr>
+                <th><?= $escaper->escapeHtml(__($label)) ?>:</th>
+                <td>
+                    <?= /* @noEscape */ nl2br($escaper->escapeHtml(
+                        implode("\n", $block->getValueAsArray($value)),
+                        ['a']
+                    )) ?>
+                </td>
+            </tr>
+        <?php endforeach; ?>
+
+    </table>
+<?php endif;?>
+
+<?= $block->getChildHtml() ?>

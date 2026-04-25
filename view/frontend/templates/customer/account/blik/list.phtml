@@ -1,0 +1,23 @@
+<?php
+/** @var \Magento\Framework\Escaper $escaper */
+/** @var \Magento\Vault\Block\Customer\AccountTokens $block */
+$tokens = $block->getPaymentTokens();
+?>
+<?php if (count($tokens) !== 0): ?>
+    <div class="table-wrapper my-credit-cards">
+        <table class="data table table-credit-cards" id="blik-list-table">
+            <thead>
+                <tr>
+                    <th scope="col" class="col"><?= $escaper->escapeHtml(__('Account')) ?></th>
+                    <th scope="col" class="col"><?= $escaper->escapeHtml(__('Type')) ?></th>
+                    <th scope="col" class="col actions">&nbsp;</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($tokens as $token): ?>
+                    <?= /* @noEscape */ $block->renderTokenHtml($token) ?>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+<?php endif; ?>

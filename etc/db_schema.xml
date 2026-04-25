@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="przelewy24_blik_notification" resource="default" engine="innodb" comment="Przelewy24 BLIK notification">
+        <column xsi:type="int" name="notification_id" unsigned="true" nullable="false" identity="true" comment="Notification ID"/>
+        <column xsi:type="varchar" name="session_id" nullable="false" length="255" comment="Session ID"/>
+        <column xsi:type="text" name="content" nullable="true" comment="Notification content"/>
+        <column xsi:type="timestamp" name="created_at" on_update="false" nullable="false" default="CURRENT_TIMESTAMP" comment="Created At"/>
+
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="notification_id"/>
+        </constraint>
+
+        <index referenceId="PRZELEWY24_BLIK_NOTIFICATION_SESSION_ID" indexType="btree">
+            <column name="session_id"/>
+        </index>
+    </table>
+</schema>

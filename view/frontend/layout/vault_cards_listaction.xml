@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceContainer name="content">
+            <referenceBlock name="vault.cards.list">
+                <block class="PayPro\Przelewy24\Block\Customer\CardRenderer" name="przelewy24_card.card.renderer" template="PayPro_Przelewy24::customer/account/vault/card.phtml"/>
+            </referenceBlock>
+            <block class="PayPro\Przelewy24\Block\Customer\BlikTokens" name="vault.blik.list" cacheable="false" template="PayPro_Przelewy24::customer/account/blik/list.phtml">
+                <block class="PayPro\Przelewy24\Block\Customer\BlikRenderer" name="przelewy24_blik.token.renderer" template="PayPro_Przelewy24::customer/account/blik/token.phtml"/>
+            </block>
+        </referenceContainer>
+    </body>
+</page>

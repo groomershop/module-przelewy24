@@ -1,0 +1,11 @@
+<?php /** @var \PayPro\Przelewy24\Block\Adminhtml\System\Config\Form\Button\TestAccessButton $block */ ?>
+<?php /** @var \Magento\Framework\Escaper $escaper */ ?>
+<button class="scalable" type="button" data-mage-init='{
+    "PayPro_Przelewy24/js/test-access": {
+        "url": "<?= $escaper->escapeJs($escaper->escapeUrl($block->getTestUrl())) ?>",
+        "scopeType": "<?= $escaper->escapeJs($block->getScopeType()) ?>",
+        "scopeId": "<?= $escaper->escapeJs($block->getScopeId()) ?>"
+    }
+}'>
+    <span><?= $escaper->escapeHtml($block->getButtonLabel()) ?></span>
+</button>

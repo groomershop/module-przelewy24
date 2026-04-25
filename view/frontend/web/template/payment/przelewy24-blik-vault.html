@@ -1,0 +1,55 @@
+<div class="payment-method" css="'_active': (getId() === isChecked())">
+    <div class="payment-method-title field choice">
+        <input type="radio"
+               name="payment[method]"
+               class="radio"
+               data-bind="
+                    attr: {'id': getId()},
+                    value: getId(),
+                    click: selectPaymentMethod,
+                    checked: isChecked,
+                    visible: isRadioButtonVisible()"/>
+        <label class="label" data-bind="attr: {'for': getId()}">
+            <img data-bind="attr: { src: getIcon()}" width="40" height="20" alt="BLIK" class="payment-icon"/>
+            <span data-bind="text: getName()"></span>
+        </label>
+    </div>
+
+    <div class="payment-method-content">
+        <each args="getRegion('messages')" render=""></each>
+        <div class="payment-method-billing-address">
+            <each args="data: $parent.getRegion(getBillingAddressFormName()), as: '$item'">
+                <render args="$item.getTemplate()"></render>
+            </each>
+        </div>
+        <div class="payment-method-przelewy24__agreements fieldset">
+            <div class="payment-method-przelewy24__agreement field choice required">
+                <input type="checkbox" name="przelewy24-regulations-accept"
+                       id="przelewy24-regulations-accept-blik-vault"
+                       class="required-entry przelewy24-regulations-accept"/>
+                <label class="label" for="przelewy24-regulations-accept-blik-vault">
+                    <span data-bind="html: getRegulations()"></span>
+                </label>
+            </div>
+        </div>
+        <div class="checkout-agreements-block">
+            <!-- ko foreach: $parent.getRegion('before-place-order') -->
+            <!-- ko template: getTemplate() --><!-- /ko -->
+            <!--/ko-->
+        </div>
+        <div class="actions-toolbar">
+            <div class="primary">
+                <button class="action primary checkout"
+                        type="submit"
+                        data-bind="
+                            click: placeOrder,
+                            attr: {title: $t('Place Order')},
+                            enable: isButtonActive()
+                        "
+                    disabled>
+                    <span translate="'Place Order'"></span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

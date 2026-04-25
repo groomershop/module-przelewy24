@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<csp_whitelist xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Csp:etc/csp_whitelist.xsd">
+    <policies>
+        <policy id="img-src">
+            <values>
+                <value id="przelewy24_static" type="host">static.przelewy24.pl</value>
+                <value id="google_www_static" type="host">www.gstatic.com</value>
+                <value id="google_static" type="host">gstatic.com</value>
+            </values>
+        </policy>
+        <policy id="font-src">
+            <values>
+                <value id="google_fonts" type="host">fonts.gstatic.com</value>
+            </values>
+        </policy>
+        <policy id="style-src">
+            <values>
+                <value id="google_fonts" type="host">fonts.googleapis.com</value>
+            </values>
+        </policy>
+        <policy id="script-src">
+            <values>
+                <value id="przelewy24_sandbox" type="host">sandbox.przelewy24.pl</value>
+                <value id="przelewy24_production" type="host">secure.przelewy24.pl</value>
+                <value id="google_pay" type="host">pay.google.com</value>
+                <value id="przelewy24_apm" type="host">apm.przelewy24.pl</value>
+            </values>
+        </policy>
+        <policy id="frame-src">
+            <values>
+                <value id="google_pay" type="host">pay.google.com</value>
+                <value id="przelewy24_apm" type="host">apm.przelewy24.pl</value>
+            </values>
+        </policy>
+        <policy id="connect-src">
+            <values>
+                <value id="przelewy24_sandbox" type="host">sandbox.przelewy24.pl</value>
+                <value id="przelewy24_production" type="host">secure.przelewy24.pl</value>
+                <value id="przelewy24_ws" type="host">wss://ws.przelewy24.pl</value>
+                <value id="przelewy24_ws_sandbox" type="host">wss://sandbox-ws.przelewy24.pl</value>
+                <value id="przelewy24_ws_production" type="host">wss://secure-ws.przelewy24.pl</value>
+                <value id="apple_pay" type="host">apple-pay-gateway.apple.com</value>
+                <value id="przelewy24_apm" type="host">apm.przelewy24.pl</value>
+                <value id="google" type="host">google.com</value>
+                <value id="www_google" type="host">www.google.com</value>
+                <value id="pay_google" type="host">pay.google.com</value>
+            </values>
+        </policy>
+        <policy id="form-action">
+            <values>
+                <value id="przelewy24_sandbox" type="host">sandbox.przelewy24.pl</value>
+                <value id="przelewy24_production" type="host">secure.przelewy24.pl</value>
+            </values>
+        </policy>
+        <policy id="frame-ancestors">
+            <values>
+                <value id="pay_google" type="host">pay.google.com</value>
+            </values>
+        </policy>
+    </policies>
+</csp_whitelist>

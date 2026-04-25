@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Sales\Block\Adminhtml\Order\View">
+        <plugin name="PayPro_Przelewy24::adjust_admin_order_view_payment_buttons" type="PayPro\Przelewy24\Plugin\AdjustAdminOrderViewPaymentButtonsPlugin"/>
+    </type>
+
+    <type name="Magento\Config\Model\Config">
+        <plugin name="PayPro_Przelewy24::disable_instalment_widget" type="PayPro\Przelewy24\Plugin\DisableInstalmentWidgetPlugin"/>
+    </type>
+</config>

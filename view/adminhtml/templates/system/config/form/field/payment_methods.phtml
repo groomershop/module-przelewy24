@@ -1,0 +1,54 @@
+<?php
+/** @var \PayPro\Przelewy24\Block\Adminhtml\System\Config\Form\Field\PaymentMethodsField $block */
+/** @var \Magento\Framework\Escaper $escaper */
+?>
+
+<div class="admin__control-table-wrapper">
+    <table class="admin__control-table przelewy24-payment-methods-table"
+           id="<?= $escaper->escapeHtmlAttr($block->getElement()->getId()) ?>"
+           data-bind="scope: 'przelewy24-payment-methods'">
+        <thead>
+            <tr>
+                <th colspan="4" class="przelewy24-payment-methods-table__header">
+                    <?= $escaper->escapeHtml(__('Display order')) ?>
+                </th>
+            </tr>
+        </thead>
+        <tfoot>
+            <tr>
+                <td colspan="4">
+                    <button data-bind="click: update"
+                            title="<?= $escaper->escapeHtmlAttr(__('Update list')) ?>"
+                            type="button">
+                        <span><?= $escaper->escapeHtml(__('Update list')) ?></span>
+                    </button>
+                    <button data-bind="click: clear"
+                            title="<?= $escaper->escapeHtmlAttr(__('Use default')) ?>"
+                            type="button">
+                        <span><?= $escaper->escapeHtml(__('Use default')) ?></span>
+                    </button>
+                </td>
+            </tr>
+        </tfoot>
+        <tbody data-bind="sortable: methods">
+            <!-- ko template: getTemplate() --><!-- /ko -->
+        </tbody>
+    </table>
+    <input type="hidden" name="<?= $escaper->escapeHtmlAttr($block->getElement()->getName()) ?>[__empty]" value=""/>
+</div>
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "Magento_Ui/js/core/app": {
+                "components": {
+                    "przelewy24-payment-methods": {
+                        "component": "PayPro_Przelewy24/js/payment-methods",
+                        "data": <?= /** @noEscape */ $block->getMethods() ?>,
+                        "fieldName": "<?= $escaper->escapeJs($block->getElement()->getName()) ?>",
+                        "updateUrl": "<?= $escaper->escapeJs($escaper->escapeUrl($block->getUpdateUrl())) ?>"
+                    }
+                }
+            }
+        }
+    }
+</script>

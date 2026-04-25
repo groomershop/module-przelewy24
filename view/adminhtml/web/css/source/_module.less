@@ -1,0 +1,156 @@
+.przelewy24-header,
+.przelewy24-fieldset {
+    display: block !important;
+}
+
+.przelewy24-fieldset-title {
+    .__collapsible-title-pattern();
+    cursor: default;
+
+    &::before {
+        display: none;
+    }
+}
+
+.przelewy24-payment-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+
+    .przelewy24-placement {
+        display: flex;
+        width: 100%;
+        margin-bottom: 32px;
+
+        a {
+            display: block;
+            margin: 0 auto;
+        }
+
+        img {
+            display: block;
+            margin: 0 auto;
+            border: 1px solid #E3E3E3;
+        }
+    }
+
+    .przelewy24-logo {
+        background: url('@{baseDir}PayPro_Przelewy24/images/logo.svg') no-repeat 0 0 ~'/' 18rem auto;
+        height: 65px;
+        width: 200px;
+    }
+
+    .przelewy24-description {
+        flex: 1;
+    }
+}
+
+.accordion .config.przelewy24-fieldset .value.with-tooltip {
+    padding-right: 3rem;
+    font-size: 14px;
+
+    .tooltip-content {
+        box-sizing: border-box;
+        border: 1px solid #ADADAD;
+        background: #F5F5F5;
+        border-radius: 0;
+        color: #000;
+        width: 400px;
+        max-width: 400px;
+        padding: 16px;
+        margin: 0 -17px 0 0;
+
+        &::before {
+            border-top-color: #ADADAD;
+            opacity: 1;
+            bottom: -6px;
+            border-width: 6px;
+            right: 19px;
+        }
+
+        &::after {
+            border-bottom: 0;
+            border-left: 5px solid transparent;
+            border-right: 5px solid transparent;
+            border-top: 5px solid #F5F5F5;
+            bottom: -5px;
+            content: '';
+            height: 0;
+            left: auto;
+            opacity: 1;
+            position: absolute;
+            right: 20px;
+            top: auto;
+            width: 0;
+        }
+    }
+}
+
+.przelewy24-tooltip-content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+
+    img {
+        display: block;
+        max-width: 100%;
+    }
+}
+
+.przelewy24-tooltip-title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #007BDB;
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 16px;
+
+    &::before {
+        &:extend(.abs-icon all);
+        color: #007BDB;
+        content: @icon-help__content;
+        font-size: 1.7rem;
+        margin-right: 10px;
+    }
+}
+
+.przelewy24-tooltip-subtitle {
+    color: #000;
+    font-size: 14px;
+    font-weight: 600;
+    display: block;
+    text-align: center;
+}
+
+.przelewy24-payment-methods-table {
+    &__header {
+        text-align: center;
+    }
+
+    &__row {
+        td {
+            vertical-align: middle !important;
+        }
+    }
+
+    &__image {
+        display: block;
+        margin: 0 auto;
+    }
+
+    &__name {
+        display: block;
+        font-weight: 700;
+        text-align: center;
+    }
+
+    &__standalone-col {
+        width: 130px;
+    }
+}
+
+#row_payment_us_przelewy24_section_przelewy24_payment_methods_payment_methods .value {
+    width: 67%;
+}

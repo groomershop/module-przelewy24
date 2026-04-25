@@ -1,0 +1,37 @@
+<?php
+/**
+ * @var \Magento\Framework\View\Element\Template $block
+ * @var \Magento\Framework\Escaper $escaper
+ * @var \PayPro\Przelewy24\ViewModel\Checkout\BlikViewModel $viewModel
+ */
+$viewModel = $block->getViewModel();
+if (!$viewModel || !$viewModel->isBlikPayment()) {
+    return;
+}
+?>
+<?php if ($viewModel->hasSuccessNotification()): ?>
+    <div class="message success message-success">
+        <div><?= $escaper->escapeHtml(__('The payment was processed correctly.')) ?></div>
+    </div>
+<?php else: ?>
+    <div id="blik-pay-again" data-bind="scope: 'blik-pay-again'">
+        <!-- ko template: getTemplate() --><!-- /ko -->
+    </div>
+    <script type="text/x-magento-init">
+        {
+            "#blik-pay-again": {
+                "Magento_Ui/js/core/app": {
+                    "components": {
+                        "blik-pay-again": {
+                            "component": "PayPro_Przelewy24/js/view/pay-again/blik",
+                            "cartId": "<?= $escaper->escapeJs($viewModel->getCartId()) ?>",
+                            "sessionId": "<?= $escaper->escapeJs($viewModel->getSessionId()) ?>",
+                            "defaultError": "<?= $escaper->escapeJs($viewModel->getNotification()->getMessage()) ?>",
+                            "blikConfig": <?= /* @noEscape */ json_encode($viewModel->getBlikConfig()) ?>
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+<?php endif; ?>

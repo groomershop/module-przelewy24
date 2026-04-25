@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="PayPro\Przelewy24\Controller\Status\Transaction">
+        <arguments>
+            <argument name="webhookHandler" xsi:type="object">PayPro\Przelewy24\Model\Webhook\TransactionWebhookHandler</argument>
+        </arguments>
+    </type>
+
+    <type name="PayPro\Przelewy24\Controller\Status\Refund">
+        <arguments>
+            <argument name="webhookHandler" xsi:type="object">PayPro\Przelewy24\Model\Webhook\RefundWebhookHandler</argument>
+        </arguments>
+    </type>
+
+    <type name="PayPro\Przelewy24\Controller\Status\Blik">
+        <arguments>
+            <argument name="webhookHandler" xsi:type="object">PayPro\Przelewy24\Model\Webhook\BlikNotificationWebhookHandler</argument>
+        </arguments>
+    </type>
+
+    <type name="Magento\Checkout\Model\CompositeConfigProvider">
+        <arguments>
+            <argument name="configProviders" xsi:type="array">
+                <item name="przelewy24_config_provider" xsi:type="object">PayPro\Przelewy24\Model\Ui\ConfigProvider</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="Magento\Vault\Model\Ui\TokensConfigProvider">
+        <arguments>
+            <argument name="tokenUiComponentProviders" xsi:type="array">
+                <item name="przelewy24_card" xsi:type="object">PayPro\Przelewy24\Model\Ui\CardTokenUiComponentProvider</item>
+                <item name="przelewy24_blik" xsi:type="object">PayPro\Przelewy24\Model\Ui\BlikTokenUiComponentProvider</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="Magento\Checkout\Block\Onepage">
+        <arguments>
+            <argument name="layoutProcessors" xsi:type="array">
+                <item name="przelewy24" xsi:type="object">PayPro\Przelewy24\Block\Checkout\Przelewy24CheckoutLayoutProcessor</item>
+            </argument>
+        </arguments>
+    </type>
+</config>

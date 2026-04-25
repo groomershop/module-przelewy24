@@ -1,0 +1,23 @@
+<?php
+/**
+ * @var \Magento\Framework\View\Element\Template $block
+ * @var \Magento\Framework\Escaper $escaper
+ * @var \Magento\Framework\View\Helper\SecureHtmlRenderer $secureRenderer
+ * @var \PayPro\Przelewy24\ViewModel\InstalmentCatalogViewModel $viewModel
+ */
+$viewModel = $block->getViewModel();
+if (!$viewModel->isEnabled()) {
+    return '';
+}
+?>
+<div id="przelewy24-instalment-widget" data-mage-init='{
+    "PayPro_Przelewy24/js/instalment-widget": {
+        "widgetConfig": <?= /** @noEscape */ $viewModel->getSerializedWidgetConfig() ?>,
+        "simulator": <?= $viewModel->isSimulatorEnabled() ? 'true' : 'false' ?>,
+        "simulatorModalId": "przelewy24-instalment-calculator-modal",
+        "size": "<?= $escaper->escapeJs($viewModel->getWidgetSize()) ?>"
+    }
+}'></div>
+<?php if ($viewModel->isSimulatorEnabled()): ?>
+    <div id="przelewy24-instalment-calculator-modal"></div>
+<?php endif; ?>

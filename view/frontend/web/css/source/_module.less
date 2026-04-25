@@ -1,0 +1,410 @@
+& when (@media-common = true) {
+
+    .payment-methods .payment-method .radio {
+        margin-top: 0;
+        vertical-align: middle;
+    }
+
+    .checkout-payment-method .payment-method-przelewy24 .payment-method-content {
+        padding-left: 0;
+    }
+
+    .payment-method-icon-przelewy24 {
+        background-color: rgba(245, 245, 245, 0.3);
+        border: 2px solid #f5f5f5;
+        height: 24px;
+        margin-left: 15px;
+        padding: 11px 8px;
+        vertical-align: middle;
+        width: auto;
+    }
+
+    .payment-method-icon-przelewy24_card {
+        height: 14px;
+        padding: 16px 6px;
+    }
+
+    .payment-method-icon-przelewy24_blik {
+        height: 22px;
+        padding: 12px 21px;
+    }
+
+    .payment-method-icon-przelewy24_google_pay {
+        height: 28px;
+        padding: 9px 21px;
+    }
+
+    .payment-method-label-przelewy24 {
+        display: inline-block;
+        vertical-align: middle;
+    }
+
+    .przelewy24-payment-method-description {
+        display: inline-block;
+        margin-left: 20px;
+        vertical-align: middle;
+    }
+
+    .przelewy24-payment-method-title {
+        color: #4c4c4c;
+        display: block;
+        font-size: 15px;
+        font-weight: 700;
+        line-height: 20px;
+        margin-bottom: 6px;
+    }
+
+    .przelewy24-payment-method-subtitle {
+        color: #4c4c4c;
+        display: block;
+        font-size: 13px;
+        line-height: 18px;
+    }
+
+    .payment-method-icon-przelewy24_apple_pay {
+        height: 28px;
+        padding: 9px 21px;
+    }
+
+    .payment-method-przelewy24 {
+        &__title {
+            font-weight: @font-weight__bold;
+            margin-bottom: @indent__base;
+        }
+
+        &__methods {
+            display: flex;
+            flex-flow: row wrap;
+            margin-bottom: @indent__l;
+            width: 100%;
+        }
+
+        &__method {
+            cursor: pointer;
+            display: flex;
+            flex: 0 0 125px;
+            height: 84px;
+            padding: 3px;
+
+            &:hover &-wrapper,
+            &--selected &-wrapper {
+                background-color: rgba(35, 170, 74, 0.12);
+                border-color: rgba(35, 170, 74, 0.57);
+            }
+
+            &-wrapper {
+                background-color: rgba(245, 245, 245, 0.3);
+                border: 2px solid #f5f5f5;
+                display: flex;
+                padding: 5px 20px;
+            }
+
+            &-img {
+                display: block;
+                height: auto;
+                margin: auto;
+                max-height: 100%;
+                min-width: 81px;
+                width: 100%;
+            }
+
+            &--promoted {
+                flex: 0 0 256px;
+                justify-content: center;
+                order: -1;
+
+                @media (min-width: 408px) {
+                    margin-left: 65px;
+                }
+
+                @media (min-width: 539px) {
+                    margin-left: 131px;
+                }
+
+                @media (min-width: 670px) {
+                    margin-left: 196px;
+                }
+
+                @media (min-width: @screen__m) {
+                    margin-left: 65px;
+                }
+
+                @media (min-width: 872px) {
+                    margin-left: 131px;
+                }
+
+                @media (min-width: 1068px) {
+                    margin-left: 196px;
+                }
+
+                @media (min-width: 1264px) {
+                    margin-left: 262px;
+                }
+            }
+
+            &--promoted &-img {
+                min-width: 212px;
+            }
+
+            &--divider {
+                flex: 0 0 100%;
+                order: -1;
+            }
+        }
+
+        &--standalone {
+            .payment-method-icon-przelewy24 {
+                width: 69px;
+            }
+        }
+    }
+
+    .payment-method-przelewy24_card {
+        .checkout-agreements-block {
+            margin-top: 2rem;
+        }
+    }
+
+    .P24FormContainer-fake {
+        position: relative;
+
+        .przelewy24-pay-with-card-wrapper {
+            background: rgba(255, 255, 255, 0.5);
+            bottom: 0;
+            left: 0;
+            position: absolute;
+            right: 0;
+            top: 0;
+
+            > .przelewy24-pay-with-card {
+                .lib-button-primary();
+                .lib-button-l();
+                left: 50%;
+                position: absolute;
+                top: 50%;
+                transform: translate(-50%, -50%);
+            }
+        }
+    }
+
+    #P24FormContainer {
+        > a {
+            .lib-button-primary();
+            .lib-button-l();
+            &:hover {
+                text-decoration: none;
+            }
+        }
+    }
+
+    #P24FormContainer,
+    .P24FormContainer-fake {
+        > form {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+            margin: 0 auto;
+
+            > p {
+                align-items: center;
+                color: @text__color;
+                display: flex;
+                flex: 0 0 100%;
+                margin-bottom: @indent__s;
+                max-width: 100%;
+                order: 10;
+                padding: 0;
+
+                &:nth-of-type(3),
+                &:nth-of-type(4) {
+                    flex: 0 0 100%;
+                    max-width: 100%;
+
+                    @media (min-width: @screen__l) {
+                        flex: 0 0 50%;
+                        max-width: 50%;
+                    }
+                }
+
+                &:nth-of-type(4) {
+                    label {
+                        @media (min-width: @screen__l) {
+                            margin-left: auto;
+                        }
+                    }
+                }
+            }
+
+            label {
+                .lib-css(font-size, @form-field-label__font-size);
+                .lib-css(line-height, @form-field-label__line-height);
+                .lib-css(padding, @form-field-type-label-inline__padding);
+                .lib-css(color, @form-field-label__color);
+                .lib-css(margin, @form-field-type-label-inline__margin);
+                .lib-css(text-align, @form-field-type-label-inline__align);
+                flex: 0 0 150px;
+                white-space: nowrap;
+                width: 150px;
+            }
+
+            input {
+                .lib-form-element-input(@_type: input-text);
+                background-color: rgba(245, 245, 245, 0.3);
+                border: 2px solid #f5f5f5;
+
+                &.P24_input_error {
+                    .lib-form-element-color(
+                        @_border-color: @form-element-validation__border-error,
+                        @_background: @form-element-validation__background-error,
+                        @_color: @form-element-validation__color-error
+                    );
+                }
+
+                &#P24_cardCVV {
+                    max-width: 60px;
+                    text-align: center;
+                }
+
+                &#P24_expMonth,
+                &#P24_expYear {
+                    flex: 0 0 60px;
+                    text-align: center;
+                }
+
+                &#P24_expMonth {
+                    margin-right: @indent__xs;
+                }
+
+                &#P24_expYear {
+                    margin-left: @indent__xs;
+                }
+            }
+
+            > button {
+                .lib-button-primary();
+                .lib-button-l();
+                order: 30;
+            }
+        }
+    }
+
+    .blik-code-fieldset {
+        .control {
+            max-width: 95px;
+            position: relative;
+
+            > input {
+                background-color: rgba(245, 245, 245, 0.3);
+                border: 2px solid #f5f5f5;
+                box-shadow: none;
+                letter-spacing: 5px;
+                padding: 0 9px 0 7px;
+
+                &:focus {
+                    outline: 0;
+                }
+            }
+
+            .blik-placeholder {
+                &-element {
+                    background: @text__color;
+                    bottom: 5px;
+                    height: 1px;
+                    position: absolute;
+                    width: 10px;
+                    .blik-placeholder(6);
+                }
+            }
+        }
+    }
+
+    .blik-token-image {
+        vertical-align: middle;
+    }
+
+    .table-credit-cards {
+        .card-type--przelewy24,
+        .col--przelewy24-blik {
+            position: relative;
+
+            &::after {
+                background: url('../PayPro_Przelewy24/images/logo.svg') no-repeat center;
+                bottom: 4px;
+                content: '';
+                height: 14px;
+                left: 4px;
+                opacity: .5;
+                position: absolute;
+                width: 40px;
+            }
+        }
+    }
+
+    .przelewy24-apple-pay-button {
+        -apple-pay-button-style: black;
+        -apple-pay-button-type: buy;
+        -webkit-appearance: -apple-pay-button;
+        display: inline-block;
+    }
+
+    #przelewy24-instalment-widget {
+        margin-bottom: 20px;
+    }
+
+    .checkout-success-link {
+        margin-bottom: 1rem;
+    }
+
+    .przelewy24-interaction-modal {
+        .modal-header {
+            display: none;
+        }
+
+        .modal-content {
+            padding: 3rem;
+            max-height: 600px;
+            height: 80vh;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .przelewy24-interaction-modal-content {
+            height: 100%;
+        }
+
+        iframe {
+            border: none;
+        }
+    }
+
+    .przelewy24-blik-confirmation-modal {
+        .action-close {
+            display: none;
+        }
+
+        .modal-content {
+            padding-top: 3rem;
+            padding-bottom: 3rem;
+        }
+    }
+}
+
+.blik-placeholder (@i) when (@i > 0) {
+    &:nth-child(@{i}) {
+        left: 8px + 13 * (@i - 1);
+    }
+    .blik-placeholder(@i - 1);
+}
+
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__xs) {
+    .payment-method-icon-przelewy24 {
+        margin-left: 0;
+    }
+
+    .przelewy24-payment-method-description {
+        margin-left: 3px;
+        max-width: 170px;
+    }
+}

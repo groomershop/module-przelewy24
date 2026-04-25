@@ -1,0 +1,837 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="PayPro\Przelewy24\Api\ApiClientInterface" type="PayPro\Przelewy24\Model\Api\ApiClient"/>
+    <preference for="PayPro\Przelewy24\Api\TransactionRepositoryInterface" type="PayPro\Przelewy24\Model\TransactionRepository"/>
+    <preference for="PayPro\Przelewy24\Api\PaymentMethodsInterface" type="PayPro\Przelewy24\Model\PaymentMethods"/>
+    <preference for="PayPro\Przelewy24\Api\Data\ApiPaymentMethodInterface" type="PayPro\Przelewy24\Model\Api\ApiPaymentMethod"/>
+    <preference for="PayPro\Przelewy24\Api\PaymentMethodsModifierInterface" type="PayPro\Przelewy24\Model\Modifier\PaymentMethodsCompositeModifier"/>
+    <preference for="PayPro\Przelewy24\Api\GetCardTokenizationPayloadInterface" type="PayPro\Przelewy24\Model\Card\GetCardTokenizationPayload"/>
+    <preference for="PayPro\Przelewy24\Api\Data\CardTokenizationPayloadInterface" type="PayPro\Przelewy24\Model\Card\CardTokenizationPayload"/>
+    <preference for="PayPro\Przelewy24\Api\RegisterCardTransactionInterface" type="PayPro\Przelewy24\Model\Card\RegisterCardTransaction"/>
+    <preference for="PayPro\Przelewy24\Api\RegisterCardVaultTransactionInterface" type="PayPro\Przelewy24\Model\Card\RegisterCardVaultTransaction"/>
+    <preference for="PayPro\Przelewy24\Api\Data\TransactionPayloadInterface" type="PayPro\Przelewy24\Model\TransactionPayload"/>
+    <preference for="PayPro\Przelewy24\Api\RegisterBlikTransactionInterface" type="PayPro\Przelewy24\Model\Blik\RegisterBlikTransaction"/>
+    <preference for="PayPro\Przelewy24\Api\Data\BlikResponseInterface" type="PayPro\Przelewy24\Model\Blik\BlikResponse"/>
+    <preference for="PayPro\Przelewy24\Api\Data\TokenTransactionInterface" type="PayPro\Przelewy24\Model\TokenTransaction"/>
+    <preference for="PayPro\Przelewy24\Api\RegisterGooglePayTransactionInterface" type="PayPro\Przelewy24\Model\GooglePay\RegisterGooglePayTransaction"/>
+    <preference for="PayPro\Przelewy24\Api\RegisterApplePayTransactionInterface" type="PayPro\Przelewy24\Model\ApplePay\RegisterApplePayTransaction"/>
+    <preference for="PayPro\Przelewy24\Api\GetBlikNotificationInterface" type="PayPro\Przelewy24\Model\Blik\GetBlikNotification"/>
+    <preference for="PayPro\Przelewy24\Api\Data\BlikNotificationInterface" type="PayPro\Przelewy24\Model\BlikNotification"/>
+    <preference for="PayPro\Przelewy24\Api\PayBlikInterface" type="PayPro\Przelewy24\Model\Blik\PayBlik"/>
+    <preference for="PayPro\Przelewy24\Api\PayAgainInterface" type="PayPro\Przelewy24\Model\PayAgain"/>
+
+    <type name="Magento\Config\Model\Config\TypePool">
+        <arguments>
+            <argument name="sensitive" xsi:type="array">
+                <item name="payment/przelewy24/crc_key" xsi:type="string">1</item>
+                <item name="payment/przelewy24/report_key" xsi:type="string">1</item>
+            </argument>
+            <argument name="environment" xsi:type="array">
+                <item name="payment/przelewy24/merchant_id" xsi:type="string">1</item>
+                <item name="payment/przelewy24/pos_id" xsi:type="string">1</item>
+                <item name="payment/przelewy24/crc_key" xsi:type="string">1</item>
+                <item name="payment/przelewy24/report_key" xsi:type="string">1</item>
+                <item name="payment/przelewy24/test_mode" xsi:type="string">1</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="PayPro\Przelewy24\Model\PaymentUpdate">
+        <arguments>
+            <argument name="invoiceProcessor" xsi:type="object">PayPro\Przelewy24\Model\Processor\InvoiceProcessor\Proxy</argument>
+        </arguments>
+    </type>
+
+    <type name="Magento\Framework\Console\CommandList">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="PayPro_Przelewy24::payment_update" xsi:type="object">PayPro\Przelewy24\Console\Command\PaymentUpdateCommand</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="PayPro\Przelewy24\Model\Modifier\PaymentMethodsCompositeModifier">
+        <arguments>
+            <argument name="modifiers" xsi:type="array">
+                <item name="active" xsi:type="object">PayPro\Przelewy24\Model\Modifier\PaymentMethodsActiveModifier</item>
+                <item name="blik" xsi:type="object">PayPro\Przelewy24\Model\Modifier\PaymentMethodsBlikModifier</item>
+                <item name="sort_order" xsi:type="object">PayPro\Przelewy24\Model\Modifier\PaymentMethodsSortOrderModifier</item>
+                <item name="standalone" xsi:type="object">PayPro\Przelewy24\Model\Modifier\PaymentMethodsStandaloneModifier</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <virtualType name="Przelewy24Logger" type="Magento\Payment\Model\Method\Logger">
+        <arguments>
+            <argument name="config" xsi:type="object">PayPro\Przelewy24\Gateway\Config\GatewayConfig</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="Przelewy24CardLogger" type="Magento\Payment\Model\Method\Logger">
+        <arguments>
+            <argument name="config" xsi:type="object">PayPro\Przelewy24\Gateway\Config\CardConfig</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="Przelewy24BlikLogger" type="Magento\Payment\Model\Method\Logger">
+        <arguments>
+            <argument name="config" xsi:type="object">PayPro\Przelewy24\Gateway\Config\BlikConfig</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="Przelewy24GooglePayLogger" type="Magento\Payment\Model\Method\Logger">
+        <arguments>
+            <argument name="config" xsi:type="object">PayPro\Przelewy24\Gateway\Config\GooglePayConfig</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="Przelewy24ApplePayLogger" type="Magento\Payment\Model\Method\Logger">
+        <arguments>
+            <argument name="config" xsi:type="object">PayPro\Przelewy24\Gateway\Config\ApplePayConfig</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="Przelewy24InfoBlock" type="PayPro\Przelewy24\Block\ConfigurableInfo">
+        <arguments>
+            <argument name="config" xsi:type="object">PayPro\Przelewy24\Gateway\Config\GatewayConfig</argument>
+            <argument name="data" xsi:type="array">
+                <item name="template" xsi:type="string">PayPro_Przelewy24::info/przelewy24.phtml</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="Przelewy24CardInfoBlock" type="PayPro\Przelewy24\Block\ConfigurableInfo">
+        <arguments>
+            <argument name="config" xsi:type="object">PayPro\Przelewy24\Gateway\Config\CardConfig</argument>
+            <argument name="data" xsi:type="array">
+                <item name="template" xsi:type="string">PayPro_Przelewy24::info/przelewy24.phtml</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="Przelewy24BlikInfoBlock" type="PayPro\Przelewy24\Block\ConfigurableInfo">
+        <arguments>
+            <argument name="config" xsi:type="object">PayPro\Przelewy24\Gateway\Config\BlikConfig</argument>
+            <argument name="data" xsi:type="array">
+                <item name="template" xsi:type="string">PayPro_Przelewy24::info/przelewy24.phtml</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="Przelewy24GooglePayInfoBlock" type="PayPro\Przelewy24\Block\ConfigurableInfo">
+        <arguments>
+            <argument name="config" xsi:type="object">PayPro\Przelewy24\Gateway\Config\GooglePayConfig</argument>
+            <argument name="data" xsi:type="array">
+                <item name="template" xsi:type="string">PayPro_Przelewy24::info/przelewy24.phtml</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="Przelewy24ApplePayInfoBlock" type="PayPro\Przelewy24\Block\ConfigurableInfo">
+        <arguments>
+            <argument name="config" xsi:type="object">PayPro\Przelewy24\Gateway\Config\ApplePayConfig</argument>
+            <argument name="data" xsi:type="array">
+                <item name="template" xsi:type="string">PayPro_Przelewy24::info/przelewy24.phtml</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <type name="PayPro\Przelewy24\Block\Adminhtml\Order\View\Tab\RefundTab">
+        <arguments>
+            <argument name="paymentLogger" xsi:type="object">Przelewy24Logger</argument>
+        </arguments>
+    </type>
+
+    <type name="PayPro\Przelewy24\Controller\Adminhtml\Payment\Refund">
+        <arguments>
+            <argument name="paymentLogger" xsi:type="object">Przelewy24Logger</argument>
+        </arguments>
+    </type>
+
+    <type name="PayPro\Przelewy24\Gateway\Http\Client\RegisterTransactionClient">
+        <arguments>
+            <argument name="paymentLogger" xsi:type="object">Przelewy24Logger</argument>
+        </arguments>
+    </type>
+
+    <type name="PayPro\Przelewy24\Gateway\Http\Client\VerifyTransactionClient">
+        <arguments>
+            <argument name="paymentLogger" xsi:type="object">Przelewy24Logger</argument>
+        </arguments>
+    </type>
+
+    <type name="PayPro\Przelewy24\Gateway\Http\Client\RefundTransactionClient">
+        <arguments>
+            <argument name="paymentLogger" xsi:type="object">Przelewy24Logger</argument>
+        </arguments>
+    </type>
+
+    <type name="PayPro\Przelewy24\Gateway\Http\Client\TransactionStatusClient">
+        <arguments>
+            <argument name="paymentLogger" xsi:type="object">Przelewy24Logger</argument>
+        </arguments>
+    </type>
+
+    <type name="PayPro\Przelewy24\Model\Webhook\TransactionWebhookHandler">
+        <arguments>
+            <argument name="paymentLogger" xsi:type="object">Przelewy24Logger</argument>
+        </arguments>
+    </type>
+
+    <type name="PayPro\Przelewy24\Model\Webhook\RefundWebhookHandler">
+        <arguments>
+            <argument name="paymentLogger" xsi:type="object">Przelewy24Logger</argument>
+        </arguments>
+    </type>
+
+    <type name="PayPro\Przelewy24\Model\Webhook\BlikNotificationWebhookHandler">
+        <arguments>
+            <argument name="paymentLogger" xsi:type="object">Przelewy24BlikLogger</argument>
+        </arguments>
+    </type>
+
+    <type name="PayPro\Przelewy24\Gateway\Http\Client\BlikChargeByAliasClient">
+        <arguments>
+            <argument name="paymentLogger" xsi:type="object">Przelewy24BlikLogger</argument>
+        </arguments>
+    </type>
+
+    <virtualType name="Przelewy24CardRegisterTransaction" type="PayPro\Przelewy24\Model\RegisterTransaction">
+        <arguments>
+            <argument name="paymentLogger" xsi:type="object">Przelewy24CardLogger</argument>
+            <argument name="client" xsi:type="const">PayPro\Przelewy24\Api\RegisterCardTransactionInterface::NAME</argument>
+            <argument name="paymentMethod" xsi:type="const">PayPro\Przelewy24\Model\Ui\ConfigProvider::CARD_CODE</argument>
+        </arguments>
+    </virtualType>
+
+    <type name="PayPro\Przelewy24\Model\Card\RegisterCardTransaction">
+        <arguments>
+            <argument name="registerTransaction" xsi:type="object">Przelewy24CardRegisterTransaction</argument>
+        </arguments>
+    </type>
+
+    <virtualType name="Przelewy24CardVaultRegisterTransaction" type="PayPro\Przelewy24\Model\RegisterTransaction">
+        <arguments>
+            <argument name="paymentLogger" xsi:type="object">Przelewy24CardLogger</argument>
+            <argument name="client" xsi:type="const">PayPro\Przelewy24\Api\RegisterCardVaultTransactionInterface::NAME</argument>
+            <argument name="paymentMethod" xsi:type="const">PayPro\Przelewy24\Model\Ui\ConfigProvider::CARD_VAULT_CODE</argument>
+        </arguments>
+    </virtualType>
+
+    <type name="PayPro\Przelewy24\Model\Card\RegisterCardVaultTransaction">
+        <arguments>
+            <argument name="registerTransaction" xsi:type="object">Przelewy24CardVaultRegisterTransaction</argument>
+        </arguments>
+    </type>
+
+    <virtualType name="Przelewy24BlikRegisterTransaction" type="PayPro\Przelewy24\Model\RegisterTransaction">
+        <arguments>
+            <argument name="paymentLogger" xsi:type="object">Przelewy24BlikLogger</argument>
+            <argument name="client" xsi:type="const">PayPro\Przelewy24\Api\RegisterBlikTransactionInterface::NAME</argument>
+            <argument name="paymentMethod" xsi:type="const">PayPro\Przelewy24\Model\Ui\ConfigProvider::BLIK_CODE</argument>
+        </arguments>
+    </virtualType>
+
+    <type name="PayPro\Przelewy24\Model\Blik\RegisterBlikTransaction">
+        <arguments>
+            <argument name="registerTransaction" xsi:type="object">Przelewy24BlikRegisterTransaction</argument>
+        </arguments>
+    </type>
+
+    <type name="PayPro\Przelewy24\Model\Blik\BlikPayAgain">
+        <arguments>
+            <argument name="registerTransaction" xsi:type="object">Przelewy24BlikRegisterTransaction</argument>
+        </arguments>
+    </type>
+
+    <virtualType name="Przelewy24GooglePayRegisterTransaction" type="PayPro\Przelewy24\Model\RegisterTransaction">
+        <arguments>
+            <argument name="paymentLogger" xsi:type="object">Przelewy24GooglePayLogger</argument>
+            <argument name="client" xsi:type="const">PayPro\Przelewy24\Api\RegisterGooglePayTransactionInterface::NAME</argument>
+            <argument name="paymentMethod" xsi:type="const">PayPro\Przelewy24\Model\Ui\ConfigProvider::GOOGLE_PAY_CODE</argument>
+        </arguments>
+    </virtualType>
+
+    <type name="PayPro\Przelewy24\Model\GooglePay\RegisterGooglePayTransaction">
+        <arguments>
+            <argument name="registerTransaction" xsi:type="object">Przelewy24GooglePayRegisterTransaction</argument>
+        </arguments>
+    </type>
+
+    <virtualType name="Przelewy24ApplePayRegisterTransaction" type="PayPro\Przelewy24\Model\RegisterTransaction">
+        <arguments>
+            <argument name="paymentLogger" xsi:type="object">Przelewy24ApplePayLogger</argument>
+            <argument name="client" xsi:type="const">PayPro\Przelewy24\Api\RegisterApplePayTransactionInterface::NAME</argument>
+            <argument name="paymentMethod" xsi:type="const">PayPro\Przelewy24\Model\Ui\ConfigProvider::APPLE_PAY_CODE</argument>
+        </arguments>
+    </virtualType>
+
+    <type name="PayPro\Przelewy24\Model\ApplePay\RegisterApplePayTransaction">
+        <arguments>
+            <argument name="registerTransaction" xsi:type="object">Przelewy24ApplePayRegisterTransaction</argument>
+        </arguments>
+    </type>
+
+    <type name="PayPro\Przelewy24\Model\ApplePay\RequestApplePayPaymentSession">
+        <arguments>
+            <argument name="paymentLogger" xsi:type="object">Przelewy24ApplePayLogger</argument>
+        </arguments>
+    </type>
+
+    <type name="Magento\Payment\Gateway\Command\CommandManagerPool">
+        <arguments>
+            <argument name="executors" xsi:type="array">
+                <item name="przelewy24_card" xsi:type="string">Przelewy24CardCommandManager</item>
+                <item name="przelewy24_blik" xsi:type="string">Przelewy24BlikCommandManager</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="PayPro\Przelewy24\Gateway\Request\AdditionalInformationRequestBuilder">
+        <plugin name="PayPro_Przelewy24::assign_eraty_scb_channel_data" type="PayPro\Przelewy24\Plugin\AssignERatySCBChannelDataPlugin"/>
+    </type>
+
+    <type name="PayPro\Przelewy24\Gateway\Config\GatewayConfig">
+        <plugin name="PayPro_Przelewy24::remove_blik_standalone_when_lvl0_active" type="PayPro\Przelewy24\Plugin\RemoveBlikStandaloneWhenLvl0ActivePlugin"/>
+    </type>
+
+    <!-- PRZELEWY24 -->
+    <virtualType name="Przelewy24Facade" type="Magento\Payment\Model\Method\Adapter">
+        <arguments>
+            <argument name="code" xsi:type="const">PayPro\Przelewy24\Model\Ui\ConfigProvider::CODE</argument>
+            <argument name="formBlockType" xsi:type="string">Magento\Payment\Block\Form</argument>
+            <argument name="infoBlockType" xsi:type="string">Przelewy24InfoBlock</argument>
+            <argument name="valueHandlerPool" xsi:type="object">Przelewy24ValueHandlerPool</argument>
+            <argument name="validatorPool" xsi:type="object">Przelewy24ValidatorPool</argument>
+            <argument name="commandPool" xsi:type="object">Przelewy24CommandPool</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="Przelewy24ValueHandlerPool" type="Magento\Payment\Gateway\Config\ValueHandlerPool">
+        <arguments>
+            <argument name="handlers" xsi:type="array">
+                <item name="default" xsi:type="string">Przelewy24ConfigValueHandler</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="Przelewy24ConfigValueHandler" type="Magento\Payment\Gateway\Config\ConfigValueHandler">
+        <arguments>
+            <argument name="configInterface" xsi:type="object">PayPro\Przelewy24\Gateway\Config\GatewayConfig</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="Przelewy24CountryValidator" type="Magento\Payment\Gateway\Validator\CountryValidator">
+        <arguments>
+            <argument name="config" xsi:type="object">PayPro\Przelewy24\Gateway\Config\GatewayConfig</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="Przelewy24CurrencyValidator" type="PayPro\Przelewy24\Gateway\Validator\CurrencyValidator">
+        <arguments>
+            <argument name="config" xsi:type="object">PayPro\Przelewy24\Gateway\Config\GatewayConfig</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="Przelewy24ValidatorPool" type="Magento\Payment\Gateway\Validator\ValidatorPool">
+        <arguments>
+            <argument name="validators" xsi:type="array">
+                <item name="currency" xsi:type="string">Przelewy24CurrencyValidator</item>
+                <item name="country" xsi:type="string">Przelewy24CountryValidator</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="Przelewy24CommandPool" type="Magento\Payment\Gateway\Command\CommandPool">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="authorize" xsi:type="string">Przelewy24AuthorizeCommand</item>
+                <item name="capture" xsi:type="string">Przelewy24CaptureCommand</item>
+                <item name="refund" xsi:type="string">Przelewy24RefundCommand</item>
+                <item name="fetch_transaction_information" xsi:type="string">Przelewy24TransactionStatusCommand</item>
+                <item name="deny_payment" xsi:type="string">PayPro\Przelewy24\Gateway\Command\DenyPaymentCommand</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <!-- AUTHORIZE -->
+    <virtualType name="Przelewy24AuthorizeCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
+        <arguments>
+            <argument name="requestBuilder" xsi:type="object">Przelewy24AuthorizeRequest</argument>
+            <argument name="transferFactory" xsi:type="object">PayPro\Przelewy24\Gateway\Http\TransferFactory</argument>
+            <argument name="client" xsi:type="object">PayPro\Przelewy24\Gateway\Http\Client\RegisterTransactionClient</argument>
+            <argument name="handler" xsi:type="object">PayPro\Przelewy24\Gateway\Response\RegisterTransactionResponseHandler</argument>
+            <argument name="validator" xsi:type="object">Przelewy24AuthorizeValidator</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="Przelewy24AuthorizeRequest" type="Magento\Payment\Gateway\Request\BuilderComposite">
+        <arguments>
+            <argument name="builders" xsi:type="array">
+                <item name="store_id" xsi:type="string">PayPro\Przelewy24\Gateway\Request\StoreIdRequestBuilder</item>
+                <item name="register_transaction" xsi:type="string">PayPro\Przelewy24\Gateway\Request\RegisterTransactionRequestBuilder</item>
+                <item name="billing_address" xsi:type="string">PayPro\Przelewy24\Gateway\Request\BillingAddressRequestBuilder</item>
+                <item name="transaction_url" xsi:type="string">PayPro\Przelewy24\Gateway\Request\TransactionUrlRequestBuilder</item>
+                <item name="language" xsi:type="string">PayPro\Przelewy24\Gateway\Request\LanguageRequestBuilder</item>
+                <item name="additional_information" xsi:type="string">PayPro\Przelewy24\Gateway\Request\AdditionalInformationRequestBuilder</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="Przelewy24AuthorizeValidator" type="Magento\Payment\Gateway\Validator\ValidatorComposite">
+        <arguments>
+            <argument name="validators" xsi:type="array">
+                <item name="common" xsi:type="string">PayPro\Przelewy24\Gateway\Validator\CommonResponseValidator</item>
+                <item name="register_transaction" xsi:type="string">PayPro\Przelewy24\Gateway\Validator\RegisterTransactionResponseValidator</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <!-- CAPTURE -->
+    <virtualType name="Przelewy24CaptureCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
+        <arguments>
+            <argument name="requestBuilder" xsi:type="object">Przelewy24CaptureRequest</argument>
+            <argument name="transferFactory" xsi:type="object">PayPro\Przelewy24\Gateway\Http\TransferFactory</argument>
+            <argument name="client" xsi:type="object">PayPro\Przelewy24\Gateway\Http\Client\VerifyTransactionClient</argument>
+            <argument name="handler" xsi:type="object">PayPro\Przelewy24\Gateway\Response\VerifyTransactionResponseHandler</argument>
+            <argument name="validator" xsi:type="object">Przelewy24CaptureValidator</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="Przelewy24CaptureRequest" type="Magento\Payment\Gateway\Request\BuilderComposite">
+        <arguments>
+            <argument name="builders" xsi:type="array">
+                <item name="store_id" xsi:type="string">PayPro\Przelewy24\Gateway\Request\StoreIdRequestBuilder</item>
+                <item name="verify_transaction" xsi:type="string">PayPro\Przelewy24\Gateway\Request\VerifyTransactionRequestBuilder</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="Przelewy24CaptureValidator" type="Magento\Payment\Gateway\Validator\ValidatorComposite">
+        <arguments>
+            <argument name="validators" xsi:type="array">
+                <item name="common" xsi:type="string">PayPro\Przelewy24\Gateway\Validator\CommonResponseValidator</item>
+                <item name="verify_transaction" xsi:type="string">PayPro\Przelewy24\Gateway\Validator\VerifyTransactionResponseValidator</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <!-- REFUND -->
+    <virtualType name="Przelewy24RefundCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
+        <arguments>
+            <argument name="requestBuilder" xsi:type="object">Przelewy24RefundRequest</argument>
+            <argument name="transferFactory" xsi:type="object">PayPro\Przelewy24\Gateway\Http\TransferFactory</argument>
+            <argument name="client" xsi:type="object">PayPro\Przelewy24\Gateway\Http\Client\RefundTransactionClient</argument>
+            <argument name="handler" xsi:type="object">PayPro\Przelewy24\Gateway\Response\RefundTransactionResponseHandler</argument>
+            <argument name="validator" xsi:type="object">Przelewy24RefundValidator</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="Przelewy24RefundRequest" type="Magento\Payment\Gateway\Request\BuilderComposite">
+        <arguments>
+            <argument name="builders" xsi:type="array">
+                <item name="store_id" xsi:type="string">PayPro\Przelewy24\Gateway\Request\StoreIdRequestBuilder</item>
+                <item name="refund_transaction" xsi:type="string">PayPro\Przelewy24\Gateway\Request\RefundTransactionRequestBuilder</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="Przelewy24RefundValidator" type="Magento\Payment\Gateway\Validator\ValidatorComposite">
+        <arguments>
+            <argument name="validators" xsi:type="array">
+                <item name="common" xsi:type="string">PayPro\Przelewy24\Gateway\Validator\CommonResponseValidator</item>
+                <item name="refund_transaction" xsi:type="string">PayPro\Przelewy24\Gateway\Validator\RefundTransactionResponseValidator</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <!-- TRANSACTION STATUS -->
+    <virtualType name="Przelewy24TransactionStatusCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
+        <arguments>
+            <argument name="requestBuilder" xsi:type="object">Przelewy24TransactionStatusRequest</argument>
+            <argument name="transferFactory" xsi:type="object">PayPro\Przelewy24\Gateway\Http\TransferFactory</argument>
+            <argument name="client" xsi:type="object">PayPro\Przelewy24\Gateway\Http\Client\TransactionStatusClient</argument>
+            <argument name="handler" xsi:type="object">PayPro\Przelewy24\Gateway\Response\TransactionStatusResponseHandler</argument>
+            <argument name="validator" xsi:type="object">Przelewy24TransactionStatusValidator</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="Przelewy24TransactionStatusRequest" type="Magento\Payment\Gateway\Request\BuilderComposite">
+        <arguments>
+            <argument name="builders" xsi:type="array">
+                <item name="store_id" xsi:type="string">PayPro\Przelewy24\Gateway\Request\StoreIdRequestBuilder</item>
+                <item name="transaction_status" xsi:type="string">PayPro\Przelewy24\Gateway\Request\TransactionStatusRequestBuilder</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="Przelewy24TransactionStatusValidator" type="Magento\Payment\Gateway\Validator\ValidatorComposite">
+        <arguments>
+            <argument name="validators" xsi:type="array">
+                <item name="transaction_status" xsi:type="string">PayPro\Przelewy24\Gateway\Validator\TransactionStatusResponseValidator</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <!-- PRZELEWY24 CARD -->
+    <virtualType name="Przelewy24CardFacade" type="Magento\Payment\Model\Method\Adapter">
+        <arguments>
+            <argument name="code" xsi:type="const">PayPro\Przelewy24\Model\Ui\ConfigProvider::CARD_CODE</argument>
+            <argument name="formBlockType" xsi:type="string">Magento\Payment\Block\Form</argument>
+            <argument name="infoBlockType" xsi:type="string">Przelewy24CardInfoBlock</argument>
+            <argument name="valueHandlerPool" xsi:type="object">Przelewy24CardValueHandlerPool</argument>
+            <argument name="validatorPool" xsi:type="object">Przelewy24CardValidatorPool</argument>
+            <argument name="commandPool" xsi:type="object">Przelewy24CardCommandPool</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="Przelewy24CardValueHandlerPool" type="Magento\Payment\Gateway\Config\ValueHandlerPool">
+        <arguments>
+            <argument name="handlers" xsi:type="array">
+                <item name="default" xsi:type="string">Przelewy24CardConfigValueHandler</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="Przelewy24CardConfigValueHandler" type="Magento\Payment\Gateway\Config\ConfigValueHandler">
+        <arguments>
+            <argument name="configInterface" xsi:type="object">PayPro\Przelewy24\Gateway\Config\CardConfig</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="Przelewy24CardCountryValidator" type="Magento\Payment\Gateway\Validator\CountryValidator">
+        <arguments>
+            <argument name="config" xsi:type="object">PayPro\Przelewy24\Gateway\Config\CardConfig</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="Przelewy24CardCurrencyValidator" type="PayPro\Przelewy24\Gateway\Validator\CurrencyValidator">
+        <arguments>
+            <argument name="config" xsi:type="object">PayPro\Przelewy24\Gateway\Config\CardConfig</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="Przelewy24CardValidatorPool" type="Magento\Payment\Gateway\Validator\ValidatorPool">
+        <arguments>
+            <argument name="validators" xsi:type="array">
+                <item name="currency" xsi:type="string">Przelewy24CardCurrencyValidator</item>
+                <item name="country" xsi:type="string">Przelewy24CardCountryValidator</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="Przelewy24CardCommandPool" type="Magento\Payment\Gateway\Command\CommandPool">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="authorize" xsi:type="string">PayPro\Przelewy24\Gateway\Command\CardAuthorizeCommand</item>
+                <item name="vault_authorize" xsi:type="string">Przelewy24CardVaultAuthorizeCommand</item>
+                <item name="capture" xsi:type="string">Przelewy24CaptureCommand</item>
+                <item name="refund" xsi:type="string">Przelewy24RefundCommand</item>
+                <item name="fetch_transaction_information" xsi:type="string">Przelewy24TransactionStatusCommand</item>
+                <item name="deny_payment" xsi:type="string">PayPro\Przelewy24\Gateway\Command\DenyPaymentCommand</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="Przelewy24CardVaultFacade" type="Magento\Vault\Model\Method\Vault">
+        <arguments>
+            <argument name="config" xsi:type="object">Przelewy24CardVaultPaymentConfig</argument>
+            <argument name="valueHandlerPool" xsi:type="object">Przelewy24CardValueHandlerPool</argument>
+            <argument name="vaultProvider" xsi:type="object">Przelewy24CardFacade</argument>
+            <argument name="code" xsi:type="const">PayPro\Przelewy24\Model\Ui\ConfigProvider::CARD_VAULT_CODE</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="Przelewy24CardVaultPaymentConfig" type="Magento\Payment\Gateway\Config\Config">
+        <arguments>
+            <argument name="methodCode" xsi:type="const">PayPro\Przelewy24\Model\Ui\ConfigProvider::CARD_VAULT_CODE</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="Przelewy24CardVaultAuthorizeCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
+        <arguments>
+            <argument name="requestBuilder" xsi:type="object">Przelewy24CardVaultAuthorizeRequest</argument>
+            <argument name="transferFactory" xsi:type="object">PayPro\Przelewy24\Gateway\Http\TransferFactory</argument>
+            <argument name="client" xsi:type="object">PayPro\Przelewy24\Gateway\Http\Client\RegisterTransactionClient</argument>
+            <argument name="handler" xsi:type="object">PayPro\Przelewy24\Gateway\Response\CardVaultResponseHandler</argument>
+            <argument name="validator" xsi:type="object">Przelewy24AuthorizeValidator</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="Przelewy24CardVaultAuthorizeRequest" type="Magento\Payment\Gateway\Request\BuilderComposite">
+        <arguments>
+            <argument name="builders" xsi:type="array">
+                <item name="store_id" xsi:type="string">PayPro\Przelewy24\Gateway\Request\StoreIdRequestBuilder</item>
+                <item name="register_transaction" xsi:type="string">PayPro\Przelewy24\Gateway\Request\RegisterTransactionRequestBuilder</item>
+                <item name="billing_address" xsi:type="string">PayPro\Przelewy24\Gateway\Request\BillingAddressRequestBuilder</item>
+                <item name="transaction_url" xsi:type="string">PayPro\Przelewy24\Gateway\Request\TransactionUrlRequestBuilder</item>
+                <item name="language" xsi:type="string">PayPro\Przelewy24\Gateway\Request\LanguageRequestBuilder</item>
+                <item name="vault" xsi:type="string">PayPro\Przelewy24\Gateway\Request\CardVaultRequestBuilder</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="Przelewy24CardCommandManager" type="Magento\Payment\Gateway\Command\CommandManager">
+        <arguments>
+            <argument name="commandPool" xsi:type="object">Przelewy24CardCommandPool</argument>
+        </arguments>
+    </virtualType>
+
+    <!-- PRZELEWY24 BLIK -->
+    <virtualType name="Przelewy24BlikFacade" type="Magento\Payment\Model\Method\Adapter">
+        <arguments>
+            <argument name="code" xsi:type="const">PayPro\Przelewy24\Model\Ui\ConfigProvider::BLIK_CODE</argument>
+            <argument name="formBlockType" xsi:type="string">Magento\Payment\Block\Form</argument>
+            <argument name="infoBlockType" xsi:type="string">Przelewy24BlikInfoBlock</argument>
+            <argument name="valueHandlerPool" xsi:type="object">Przelewy24BlikValueHandlerPool</argument>
+            <argument name="validatorPool" xsi:type="object">Przelewy24BlikValidatorPool</argument>
+            <argument name="commandPool" xsi:type="object">Przelewy24BlikCommandPool</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="Przelewy24BlikValueHandlerPool" type="Magento\Payment\Gateway\Config\ValueHandlerPool">
+        <arguments>
+            <argument name="handlers" xsi:type="array">
+                <item name="default" xsi:type="string">Przelewy24BlikConfigValueHandler</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="Przelewy24BlikConfigValueHandler" type="Magento\Payment\Gateway\Config\ConfigValueHandler">
+        <arguments>
+            <argument name="configInterface" xsi:type="object">PayPro\Przelewy24\Gateway\Config\BlikConfig</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="Przelewy24BlikCountryValidator" type="Magento\Payment\Gateway\Validator\CountryValidator">
+        <arguments>
+            <argument name="config" xsi:type="object">PayPro\Przelewy24\Gateway\Config\BlikConfig</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="Przelewy24BlikCurrencyValidator" type="PayPro\Przelewy24\Gateway\Validator\CurrencyValidator">
+        <arguments>
+            <argument name="config" xsi:type="object">PayPro\Przelewy24\Gateway\Config\BlikConfig</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="Przelewy24BlikValidatorPool" type="Magento\Payment\Gateway\Validator\ValidatorPool">
+        <arguments>
+            <argument name="validators" xsi:type="array">
+                <item name="currency" xsi:type="string">Przelewy24BlikCurrencyValidator</item>
+                <item name="country" xsi:type="string">Przelewy24BlikCountryValidator</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="Przelewy24BlikCommandPool" type="Magento\Payment\Gateway\Command\CommandPool">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="authorize" xsi:type="string">PayPro\Przelewy24\Gateway\Command\BlikAuthorizeCommand</item>
+                <item name="vault_authorize" xsi:type="string">Przelewy24BlikVaultAuthorizeCommand</item>
+                <item name="capture" xsi:type="string">Przelewy24CaptureCommand</item>
+                <item name="refund" xsi:type="string">Przelewy24RefundCommand</item>
+                <item name="fetch_transaction_information" xsi:type="string">Przelewy24TransactionStatusCommand</item>
+                <item name="deny_payment" xsi:type="string">PayPro\Przelewy24\Gateway\Command\DenyPaymentCommand</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="Przelewy24BlikVaultFacade" type="Magento\Vault\Model\Method\Vault">
+        <arguments>
+            <argument name="config" xsi:type="object">Przelewy24BlikVaultPaymentConfig</argument>
+            <argument name="valueHandlerPool" xsi:type="object">Przelewy24BlikValueHandlerPool</argument>
+            <argument name="vaultProvider" xsi:type="object">Przelewy24BlikFacade</argument>
+            <argument name="code" xsi:type="const">PayPro\Przelewy24\Model\Ui\ConfigProvider::BLIK_VAULT_CODE</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="Przelewy24BlikVaultPaymentConfig" type="Magento\Payment\Gateway\Config\Config">
+        <arguments>
+            <argument name="methodCode" xsi:type="const">PayPro\Przelewy24\Model\Ui\ConfigProvider::BLIK_VAULT_CODE</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="Przelewy24BlikVaultAuthorizeCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
+        <arguments>
+            <argument name="requestBuilder" xsi:type="object">Przelewy24BlikVaultAuthorizeRequest</argument>
+            <argument name="transferFactory" xsi:type="object">PayPro\Przelewy24\Gateway\Http\TransferFactory</argument>
+            <argument name="client" xsi:type="object">PayPro\Przelewy24\Gateway\Http\Client\BlikChargeByAliasClient</argument>
+            <argument name="handler" xsi:type="object">PayPro\Przelewy24\Gateway\Response\BlikVaultResponseHandler</argument>
+            <argument name="validator" xsi:type="object">Przelewy24BlikVaultAuthorizeValidator</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="Przelewy24BlikVaultAuthorizeRequest" type="Magento\Payment\Gateway\Request\BuilderComposite">
+        <arguments>
+            <argument name="builders" xsi:type="array">
+                <item name="store_id" xsi:type="string">PayPro\Przelewy24\Gateway\Request\StoreIdRequestBuilder</item>
+                <item name="register_transaction" xsi:type="string">PayPro\Przelewy24\Gateway\Request\RegisterTransactionRequestBuilder</item>
+                <item name="billing_address" xsi:type="string">PayPro\Przelewy24\Gateway\Request\BillingAddressRequestBuilder</item>
+                <item name="transaction_url" xsi:type="string">PayPro\Przelewy24\Gateway\Request\TransactionUrlRequestBuilder</item>
+                <item name="language" xsi:type="string">PayPro\Przelewy24\Gateway\Request\LanguageRequestBuilder</item>
+                <item name="vault" xsi:type="string">PayPro\Przelewy24\Gateway\Request\BlikVaultRequestBuilder</item>
+                <item name="blik_psu" xsi:type="string">PayPro\Przelewy24\Gateway\Request\BlikPSURequestBuilder</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="Przelewy24BlikVaultAuthorizeValidator" type="Magento\Payment\Gateway\Validator\ValidatorComposite">
+        <arguments>
+            <argument name="validators" xsi:type="array">
+                <item name="common" xsi:type="string">PayPro\Przelewy24\Gateway\Validator\CommonResponseValidator</item>
+                <item name="blik_vault" xsi:type="string">PayPro\Przelewy24\Gateway\Validator\BlikVaultResponseValidator</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="Przelewy24BlikCommandManager" type="Magento\Payment\Gateway\Command\CommandManager">
+        <arguments>
+            <argument name="commandPool" xsi:type="object">Przelewy24BlikCommandPool</argument>
+        </arguments>
+    </virtualType>
+
+    <type name="Magento\Vault\Model\PaymentTokenFactory">
+        <arguments>
+            <argument name="tokenTypes" xsi:type="array">
+                <item name="blik" xsi:type="const">PayPro\Przelewy24\Api\Data\BlikAliasInterface::VAULT_TOKEN_TYPE</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <!-- PRZELEWY24 GOOGLE PAY -->
+    <virtualType name="Przelewy24GooglePayFacade" type="Magento\Payment\Model\Method\Adapter">
+        <arguments>
+            <argument name="code" xsi:type="const">PayPro\Przelewy24\Model\Ui\ConfigProvider::GOOGLE_PAY_CODE</argument>
+            <argument name="formBlockType" xsi:type="string">Magento\Payment\Block\Form</argument>
+            <argument name="infoBlockType" xsi:type="string">Przelewy24GooglePayInfoBlock</argument>
+            <argument name="valueHandlerPool" xsi:type="object">Przelewy24GooglePayValueHandlerPool</argument>
+            <argument name="validatorPool" xsi:type="object">Przelewy24GooglePayValidatorPool</argument>
+            <argument name="commandPool" xsi:type="object">Przelewy24GooglePayCommandPool</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="Przelewy24GooglePayValueHandlerPool" type="Magento\Payment\Gateway\Config\ValueHandlerPool">
+        <arguments>
+            <argument name="handlers" xsi:type="array">
+                <item name="default" xsi:type="string">Przelewy24GooglePayConfigValueHandler</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="Przelewy24GooglePayConfigValueHandler" type="Magento\Payment\Gateway\Config\ConfigValueHandler">
+        <arguments>
+            <argument name="configInterface" xsi:type="object">PayPro\Przelewy24\Gateway\Config\GooglePayConfig</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="Przelewy24GooglePayCountryValidator" type="Magento\Payment\Gateway\Validator\CountryValidator">
+        <arguments>
+            <argument name="config" xsi:type="object">PayPro\Przelewy24\Gateway\Config\GooglePayConfig</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="Przelewy24GooglePayCurrencyValidator" type="PayPro\Przelewy24\Gateway\Validator\CurrencyValidator">
+        <arguments>
+            <argument name="config" xsi:type="object">PayPro\Przelewy24\Gateway\Config\GooglePayConfig</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="Przelewy24GooglePayValidatorPool" type="Magento\Payment\Gateway\Validator\ValidatorPool">
+        <arguments>
+            <argument name="validators" xsi:type="array">
+                <item name="currency" xsi:type="string">Przelewy24GooglePayCurrencyValidator</item>
+                <item name="country" xsi:type="string">Przelewy24GooglePayCountryValidator</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="Przelewy24GooglePayCommandPool" type="Magento\Payment\Gateway\Command\CommandPool">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="authorize" xsi:type="string">PayPro\Przelewy24\Gateway\Command\BundlePayAuthorizeCommand</item>
+                <item name="capture" xsi:type="string">Przelewy24CaptureCommand</item>
+                <item name="refund" xsi:type="string">Przelewy24RefundCommand</item>
+                <item name="fetch_transaction_information" xsi:type="string">Przelewy24TransactionStatusCommand</item>
+                <item name="deny_payment" xsi:type="string">PayPro\Przelewy24\Gateway\Command\DenyPaymentCommand</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <!-- PRZELEWY24 APPLE PAY -->
+    <virtualType name="Przelewy24ApplePayFacade" type="Magento\Payment\Model\Method\Adapter">
+        <arguments>
+            <argument name="code" xsi:type="const">PayPro\Przelewy24\Model\Ui\ConfigProvider::APPLE_PAY_CODE</argument>
+            <argument name="formBlockType" xsi:type="string">Magento\Payment\Block\Form</argument>
+            <argument name="infoBlockType" xsi:type="string">Przelewy24ApplePayInfoBlock</argument>
+            <argument name="valueHandlerPool" xsi:type="object">Przelewy24ApplePayValueHandlerPool</argument>
+            <argument name="validatorPool" xsi:type="object">Przelewy24ApplePayValidatorPool</argument>
+            <argument name="commandPool" xsi:type="object">Przelewy24ApplePayCommandPool</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="Przelewy24ApplePayValueHandlerPool" type="Magento\Payment\Gateway\Config\ValueHandlerPool">
+        <arguments>
+            <argument name="handlers" xsi:type="array">
+                <item name="default" xsi:type="string">Przelewy24ApplePayConfigValueHandler</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="Przelewy24ApplePayConfigValueHandler" type="Magento\Payment\Gateway\Config\ConfigValueHandler">
+        <arguments>
+            <argument name="configInterface" xsi:type="object">PayPro\Przelewy24\Gateway\Config\ApplePayConfig</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="Przelewy24ApplePayCountryValidator" type="Magento\Payment\Gateway\Validator\CountryValidator">
+        <arguments>
+            <argument name="config" xsi:type="object">PayPro\Przelewy24\Gateway\Config\ApplePayConfig</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="Przelewy24ApplePayCurrencyValidator" type="PayPro\Przelewy24\Gateway\Validator\CurrencyValidator">
+        <arguments>
+            <argument name="config" xsi:type="object">PayPro\Przelewy24\Gateway\Config\ApplePayConfig</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="Przelewy24ApplePayValidatorPool" type="Magento\Payment\Gateway\Validator\ValidatorPool">
+        <arguments>
+            <argument name="validators" xsi:type="array">
+                <item name="currency" xsi:type="string">Przelewy24ApplePayCurrencyValidator</item>
+                <item name="country" xsi:type="string">Przelewy24ApplePayCountryValidator</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="Przelewy24ApplePayCommandPool" type="Magento\Payment\Gateway\Command\CommandPool">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="authorize" xsi:type="string">PayPro\Przelewy24\Gateway\Command\BundlePayAuthorizeCommand</item>
+                <item name="capture" xsi:type="string">Przelewy24CaptureCommand</item>
+                <item name="refund" xsi:type="string">Przelewy24RefundCommand</item>
+                <item name="fetch_transaction_information" xsi:type="string">Przelewy24TransactionStatusCommand</item>
+                <item name="deny_payment" xsi:type="string">PayPro\Przelewy24\Gateway\Command\DenyPaymentCommand</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <preference for="PayPro\Przelewy24\Api\SessionId\SessionIdProviderInterface"
+                type="PayPro\Przelewy24\Model\SessionId\SessionIdProvider"/>
+    <preference for="PayPro\Przelewy24\Api\SessionId\RefundsUuIdProviderInterface"
+                type="PayPro\Przelewy24\Model\SessionId\RefundsUuIdProvider"/>
+    <preference for="PayPro\Przelewy24\Api\SessionId\PackageVersionProviderInterface"
+                type="PayPro\Przelewy24\Model\SessionId\PackageVersionProvider"/>
+
+    <virtualType name="PayPro\Przelewy24\Model\RenewBlikTransaction" type="PayPro\Przelewy24\Model\RenewTransaction">
+        <arguments>
+            <argument name="payAgain" xsi:type="object">PayPro\Przelewy24\Model\Blik\BlikPayAgain</argument>
+        </arguments>
+    </virtualType>
+
+    <type name="PayPro\Przelewy24\Model\Blik\PayBlik">
+        <arguments>
+            <argument name="renewTransaction" xsi:type="object">PayPro\Przelewy24\Model\RenewBlikTransaction</argument>
+        </arguments>
+    </type>
+</config>

@@ -1,0 +1,64 @@
+<div data-bind="attr: { class: 'payment-method payment-method-' + getCode() }, css: { '_active': (getCode() == isChecked()) }">
+    <div class="payment-method-title field choice">
+        <input type="radio"
+               name="payment[method]"
+               class="radio"
+               data-bind="
+                    attr: {'id': getCode()},
+                    value: getCode(),
+                    checked: isChecked,
+                    click: selectPaymentMethod,
+                    visible: isRadioButtonVisible()"/>
+        <label class="label payment-method-label-przelewy24" data-bind="attr: {'for': getCode()}">
+            <img data-bind="attr: { src: getLogo(), class: 'payment-method-icon payment-method-icon-przelewy24 payment-method-icon-' + getCode() }"
+                 alt="Credit Card"/>
+            <span class="przelewy24-payment-method-description">
+                <span class="przelewy24-payment-method-title" data-bind="i18n: 'Credit card'"></span>
+                <span class="przelewy24-payment-method-subtitle" data-bind="i18n: 'Complete your payment card details'"></span>
+            </span>
+        </label>
+    </div>
+    <div class="payment-method-content">
+        <!-- ko foreach: getRegion('messages') -->
+        <!-- ko template: getTemplate() --><!-- /ko -->
+        <!--/ko-->
+        <div class="payment-method-billing-address">
+            <!-- ko foreach: $parent.getRegion(getBillingAddressFormName()) -->
+            <!-- ko template: getTemplate() --><!-- /ko -->
+            <!--/ko-->
+        </div>
+        <form id="p24-cc-form"></form>
+        <div id="p24-cc-modal" class="przelewy24-interaction-modal-content" style="display: none"></div>
+        <div class="checkout-agreements-block">
+            <!-- ko foreach: $parent.getRegion('before-place-order') -->
+            <!-- ko template: getTemplate() --><!-- /ko -->
+            <!--/ko-->
+        </div>
+        <!-- ko if: (isVaultEnabled())-->
+        <div class="field choice">
+            <input type="checkbox"
+                   name="vault[is_enabled]"
+                   class="checkbox"
+                   data-bind="attr: {'id': getCode() + '_enable_vault'}, checked: vaultEnabler.isActivePaymentTokenEnabler"/>
+            <label class="label" data-bind="attr: {'for': getCode() + '_enable_vault'}">
+                <span><!-- ko i18n: 'Save for later use.'--><!-- /ko --></span>
+            </label>
+        </div>
+        <!-- /ko -->
+        <div class="actions-toolbar">
+            <div class="primary">
+                <button class="action primary checkout"
+                        type="submit"
+                        data-bind="
+                            click: payWithCard,
+                            attr: { title: $t('Place Order') },
+                            css: { disabled: !isPaymentReady() },
+                            enable: (getCode() == isChecked())"
+                        disabled
+                >
+                    <span data-bind="i18n: 'Place Order'"></span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

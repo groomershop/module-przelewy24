@@ -1,0 +1,15 @@
+{
+    "przelewy24_blik_notification": {
+        "column": {
+            "notification_id": true,
+            "session_id": true,
+            "content": true
+        },
+        "index": {
+            "PRZELEWY24_BLIK_NOTIFICATION_SESSION_ID": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    }
+}

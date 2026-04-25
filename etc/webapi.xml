@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+<routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Webapi:etc/webapi.xsd">
+    <route url="/V1/przelewy24/payment-methods" method="GET">
+        <service class="PayPro\Przelewy24\Api\PaymentMethodsInterface" method="execute"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+
+    <route url="/V1/przelewy24/get-card-tokenization-payload" method="GET">
+        <service class="PayPro\Przelewy24\Api\GetCardTokenizationPayloadInterface" method="execute"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+
+    <route url="/V1/przelewy24/register-card-transaction" method="POST">
+        <service class="PayPro\Przelewy24\Api\RegisterCardTransactionInterface" method="execute"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+
+    <route url="/V1/przelewy24/register-card-vault-transaction" method="POST">
+        <service class="PayPro\Przelewy24\Api\RegisterCardVaultTransactionInterface" method="execute"/>
+        <resources>
+            <resource ref="self"/>
+        </resources>
+        <data>
+            <parameter name="customerId" force="true">%customer_id%</parameter>
+        </data>
+    </route>
+
+    <route url="/V1/przelewy24/register-blik-transaction" method="POST">
+        <service class="PayPro\Przelewy24\Api\RegisterBlikTransactionInterface" method="execute"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+
+    <route url="/V1/przelewy24/register-google-pay-transaction" method="POST">
+        <service class="PayPro\Przelewy24\Api\RegisterGooglePayTransactionInterface" method="execute"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+
+    <route url="/V1/przelewy24/register-apple-pay-transaction" method="POST">
+        <service class="PayPro\Przelewy24\Api\RegisterApplePayTransactionInterface" method="execute"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+
+    <route url="/V1/przelewy24/blik-notification" method="POST">
+        <service class="PayPro\Przelewy24\Api\GetBlikNotificationInterface" method="execute"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+
+    <route url="/V1/przelewy24/blik-pay" method="POST">
+        <service class="PayPro\Przelewy24\Api\PayBlikInterface" method="execute"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+</routes>

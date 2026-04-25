@@ -1,0 +1,15 @@
+<?php
+/** @var \Magento\Framework\View\Element\Template $block */
+/** @var \Magento\Framework\Escaper $escaper */
+/** @var \PayPro\Przelewy24\ViewModel\Checkout\PaymentStatus $viewModel */
+$viewModel = $block->getViewModel();
+if (!$viewModel || !$viewModel->isVisible()) {
+    return;
+}
+?>
+
+<?php if ($viewModel->isTransactionPaid()): ?>
+    <p class="checkout-success-przelewy24">
+        <?= $escaper->escapeHtml(__('Your order has been paid.')) ?>
+    </p>
+<?php endif; ?>

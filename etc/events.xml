@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="payment_method_assign_data_przelewy24">
+        <observer name="PayPro_Przelewy24::gateway_data_assign" instance="PayPro\Przelewy24\Observer\GatewayDataAssignObserver"/>
+    </event>
+
+    <event name="payment_method_assign_data_przelewy24_card">
+        <observer name="PayPro_Przelewy24::card_data_assign" instance="PayPro\Przelewy24\Observer\CardDataAssignObserver"/>
+    </event>
+
+    <event name="payment_method_assign_data_przelewy24_blik">
+        <observer name="PayPro_Przelewy24::blik_data_assign" instance="PayPro\Przelewy24\Observer\BlikDataAssignObserver"/>
+        <observer name="PayPro_Przelewy24::token_data_assign" instance="PayPro\Przelewy24\Observer\TokenDataAssignObserver"/>
+    </event>
+
+    <event name="payment_method_assign_data_przelewy24_google_pay">
+        <observer name="PayPro_Przelewy24::token_data_assign" instance="PayPro\Przelewy24\Observer\TokenDataAssignObserver"/>
+    </event>
+
+    <event name="payment_method_assign_data_przelewy24_apple_pay">
+        <observer name="PayPro_Przelewy24::token_data_assign" instance="PayPro\Przelewy24\Observer\TokenDataAssignObserver"/>
+    </event>
+</config>

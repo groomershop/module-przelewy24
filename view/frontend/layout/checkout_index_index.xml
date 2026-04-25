@@ -1,0 +1,78 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceBlock name="checkout.root">
+            <arguments>
+                <argument name="jsLayout" xsi:type="array">
+                    <item name="components" xsi:type="array">
+                        <item name="checkout" xsi:type="array">
+                            <item name="children" xsi:type="array">
+                                <item name="steps" xsi:type="array">
+                                    <item name="children" xsi:type="array">
+                                        <item name="billing-step" xsi:type="array">
+                                            <item name="children" xsi:type="array">
+                                                <item name="payment" xsi:type="array">
+                                                    <item name="children" xsi:type="array">
+                                                        <item name="additional-payment-validators" xsi:type="array">
+                                                            <item name="children" xsi:type="array">
+                                                                <item name="przelewy24-validator" xsi:type="array">
+                                                                    <item name="component" xsi:type="string">PayPro_Przelewy24/js/view/przelewy24-validation</item>
+                                                                </item>
+                                                            </item>
+                                                        </item>
+                                                        <item name="renders" xsi:type="array">
+                                                            <item name="children" xsi:type="array">
+                                                                <item name="przelewy24" xsi:type="array">
+                                                                    <item name="component" xsi:type="string">PayPro_Przelewy24/js/view/payment/przelewy24</item>
+                                                                    <item name="methods" xsi:type="array">
+                                                                        <item name="przelewy24" xsi:type="array">
+                                                                            <item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+                                                                        </item>
+                                                                        <item name="przelewy24_card" xsi:type="array">
+                                                                            <item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+                                                                        </item>
+                                                                        <item name="przelewy24_blik" xsi:type="array">
+                                                                            <item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+                                                                        </item>
+                                                                        <item name="przelewy24_google_pay" xsi:type="array">
+                                                                            <item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+                                                                        </item>
+                                                                        <item name="przelewy24_apple_pay" xsi:type="array">
+                                                                            <item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+                                                                        </item>
+                                                                    </item>
+                                                                </item>
+                                                            </item>
+                                                        </item>
+                                                    </item>
+                                                </item>
+                                            </item>
+                                        </item>
+                                    </item>
+                                </item>
+                                <item name="sidebar" xsi:type="array">
+                                    <item name="children" xsi:type="array">
+                                        <item name="summary" xsi:type="array">
+                                            <item name="children" xsi:type="array">
+                                                <item name="itemsAfter" xsi:type="array">
+                                                    <item name="children" xsi:type="array">
+                                                        <item name="przelewy24-instalment" xsi:type="array">
+                                                            <item name="component" xsi:type="string">PayPro_Przelewy24/js/view/summary/przelewy24-instalment</item>
+                                                            <item name="config" xsi:type="array">
+                                                                <item name="template" xsi:type="string">PayPro_Przelewy24/summary/przelewy24-instalment</item>
+                                                            </item>
+                                                        </item>
+                                                    </item>
+                                                </item>
+                                            </item>
+                                        </item>
+                                    </item>
+                                </item>
+                            </item>
+                        </item>
+                    </item>
+                </argument>
+            </arguments>
+        </referenceBlock>
+    </body>
+</page>

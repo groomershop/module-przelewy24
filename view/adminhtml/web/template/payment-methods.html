@@ -1,0 +1,22 @@
+<!-- ko foreach: methods -->
+    <tr class="przelewy24-payment-methods-table__row">
+        <td class="col-draggable">
+            <div class="draggable-handle"></div>
+        </td>
+        <td>
+            <span class="przelewy24-payment-methods-table__name" data-bind="text: name"></span>
+            <input data-bind="attr: { value: id, name: fieldName + '[' + $index() + '][id]' }" type="hidden"/>
+            <input data-bind="attr: { value: name, name: fieldName + '[' + $index() + '][name]' }" type="hidden"/>
+        </td>
+        <td>
+            <img class="przelewy24-payment-methods-table__image" data-bind="attr: { src: img }" height="40" alt=""/>
+            <input data-bind="attr: { value: img, name: fieldName + '[' + $index() + '][img]' }" type="hidden"/>
+        </td>
+        <td class="przelewy24-payment-methods-table__standalone-col">
+            <select data-bind="attr: { name: fieldName + '[' + $index() + '][standalone]' }, value: standalone" class=" select admin__control-select">
+                <option value="0">Gateway</option>
+                <option value="1">Standalone</option>
+            </select>
+        </td>
+    </tr>
+<!-- /ko -->

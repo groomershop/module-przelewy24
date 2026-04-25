@@ -1,0 +1,21 @@
+<?php
+/** @var \Magento\Framework\View\Element\Template $block */
+/** @var \Magento\Framework\Escaper $escaper */
+/** @var \PayPro\Przelewy24\ViewModel\Checkout\PaymentLink $viewModel */
+$viewModel = $block->getViewModel();
+if (!$viewModel || !$viewModel->isRedirectFailure()) {
+    return;
+}
+?>
+
+<?php if ($paymentLink = $viewModel->getPaymentLink()): ?>
+    <div class="checkout-success-link">
+        <a class="action primary" href="<?= $escaper->escapeHtmlAttr($paymentLink) ?>">
+            <span><?= $escaper->escapeHtml(__('Go to Przelewy24 and pay for the order')) ?></span>
+        </a>
+    </div>
+<?php else: ?>
+    <p>
+        <?= $escaper->escapeHtml(__('Please check your email for payment details or contact customer support.')); ?>
+    </p>
+<?php endif; ?>

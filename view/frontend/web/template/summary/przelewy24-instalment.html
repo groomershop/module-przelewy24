@@ -1,0 +1,9 @@
+<!-- ko if: simulator -->
+<a href="#" id="przelewy24-instalment-trigger" data-bind="click: openModal, afterRender: initializeInstalment">
+    <img data-bind="attr: { src: require.toUrl('PayPro_Przelewy24/images/instalment.png') }" alt="">
+</a>
+<div id="przelewy24-instalment-calculator-modal"></div>
+<!-- /ko -->
+<!-- ko ifnot: simulator -->
+<img data-bind="attr: { src: require.toUrl('PayPro_Przelewy24/images/instalment.png') }" alt="">
+<!-- /ko -->

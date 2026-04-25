@@ -1,0 +1,59 @@
+<div data-bind="attr: { class: 'payment-method payment-method-przelewy24 payment-method-przelewy24--standalone' }, css: { '_active': (getCode() == isChecked()) }">
+    <div class="payment-method-title field choice">
+        <input type="radio"
+               name="payment[method]"
+               class="radio"
+               data-bind="
+                    attr: {'id': getCode()},
+                    value: getCode(),
+                    checked: isChecked,
+                    click: selectPaymentMethod,
+                    visible: isRadioButtonVisible()"/>
+        <label class="label payment-method-label-przelewy24" data-bind="attr: {'for': getCode()}">
+            <img data-bind="attr: { src: getLogo(), alt: title, class: 'payment-method-icon payment-method-icon-przelewy24' }"
+                 alt=""/>
+            <span class="przelewy24-payment-method-description">
+                <span class="przelewy24-payment-method-title" data-bind="text: title"></span>
+            </span>
+        </label>
+    </div>
+    <div class="payment-method-content">
+        <!-- ko foreach: getRegion('messages') -->
+        <!-- ko template: getTemplate() --><!-- /ko -->
+        <!--/ko-->
+        <div class="payment-method-billing-address">
+            <!-- ko foreach: $parent.getRegion(getBillingAddressFormName()) -->
+            <!-- ko template: getTemplate() --><!-- /ko -->
+            <!--/ko-->
+        </div>
+        <div class="payment-method-przelewy24__agreements fieldset">
+            <div class="payment-method-przelewy24__agreement field choice required">
+                <input type="checkbox" name="przelewy24-regulations-accept"
+                       class="przelewy24-regulations-accept required-entry"
+                       data-bind="checked: regulationAccept, attr: { id: 'przelewy24-regulations-accept-' + methodId }"/>
+                <label class="label" data-bind="attr: { for: 'przelewy24-regulations-accept-' + methodId }">
+                    <span data-bind="html: getRegulations()"></span>
+                </label>
+            </div>
+        </div>
+        <div class="checkout-agreements-block">
+            <!-- ko foreach: $parent.getRegion('before-place-order') -->
+            <!-- ko template: getTemplate() --><!-- /ko -->
+            <!--/ko-->
+        </div>
+        <div class="actions-toolbar">
+            <div class="primary">
+                <button class="action primary checkout"
+                        type="submit"
+                        data-bind="
+                            click: placeOrder,
+                            attr: { title: $t('Place Order') },
+                            enable: (getCode() == isChecked())"
+                        disabled
+                >
+                    <span data-bind="i18n: 'Place Order'"></span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

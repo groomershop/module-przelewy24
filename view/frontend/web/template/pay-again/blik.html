@@ -1,0 +1,42 @@
+<div class="payment-method-content">
+    <div if="errorMessage" class="message error message-error">
+        <div data-bind="text: errorMessage"></div>
+    </div>
+    <div if="successMessage" class="message success message-success">
+        <div data-bind="text: successMessage"></div>
+    </div>
+    <fieldset class="fieldset blik-code-fieldset" if="!successMessage()">
+        <div class="field">
+            <label class="label" for="blik-code">
+                <span data-bind="i18n: 'Enter 6 digit BLIK code and confirm transaction on your device'"></span>
+            </label>
+
+            <div class="control">
+                <input type="text" id="blik-code" data-bind="textInput: blikCode" maxlength="6"/>
+                <div class="blik-placeholder">
+                    <span class="blik-placeholder-element"></span>
+                    <span class="blik-placeholder-element"></span>
+                    <span class="blik-placeholder-element"></span>
+                    <span class="blik-placeholder-element"></span>
+                    <span class="blik-placeholder-element"></span>
+                    <span class="blik-placeholder-element"></span>
+                </div>
+            </div>
+        </div>
+        <div class="actions-toolbar">
+            <div class="primary">
+                <button class="action primary checkout"
+                        type="submit"
+                        data-bind="
+                            click: payAgain,
+                            attr: { title: $t('Pay again') },
+                            css: { disabled: !isBlikCodeReady() },
+                            enable: isBlikCodeReady()"
+                        disabled
+                >
+                    <span data-bind="i18n: 'Pay again'"></span>
+                </button>
+            </div>
+        </div>
+    </fieldset>
+</div>
