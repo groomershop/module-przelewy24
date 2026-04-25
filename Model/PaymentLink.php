@@ -12,21 +12,23 @@ class PaymentLink
     const SUCCESS_ROUTE = 'przelewy24/payment/success';
 
     /**
-     * @var \Magento\Store\Model\StoreManagerInterface
+     * @var \Magento\Framework\Url
      */
-    private $storeManager;
+    private $frontendUrl;
 
     public function __construct(
-        \Magento\Store\Model\StoreManagerInterface $storeManager
+        \Magento\Framework\Url $frontendUrl
     ) {
-        $this->storeManager = $storeManager;
+        $this->frontendUrl = $frontendUrl;
     }
 
     public function execute(Payment $payment): string
     {
-        /** @var \Magento\Store\Model\Store $store */
-        $store = $this->storeManager->getStore($payment->getOrder()->getStoreId());
+        $this->frontendUrl->setScope((int) $payment->getOrder()->getStoreId());
 
-        return $store->getUrl(self::PAYMENT_ROUTE, ['id' => $payment->getTransactionId()]);
+        return $this->frontendUrl->getUrl(self::PAYMENT_ROUTE, [
+            '_nosid' => true,
+            'id' => $payment->getTransactionId(),
+        ]);
     }
 }
